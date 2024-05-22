@@ -40,10 +40,12 @@ Email: 33700710@mynwu.ac.za}
 
 \begin{abstract}
 This paper presents a convolutional neural network (CNN) model and a mobile application for classifying fresh and rotten fruits. The CNN model is designed to distinguish between fresh and rotten apples, bananas, and oranges using image data. The model architecture consists of multiple convolutional layers, batch normalization, dropout, and fully connected layers. The training process utilizes data augmentation techniques, such as random horizontal flipping and normalization, to enhance the model's performance. The model is trained on a dataset of fruit images and evaluated for its classification accuracy. Additionally, a mobile application is developed to integrate the trained model for real-time fruit classification. The application allows users to load fruit images, preprocess them, and obtain predictions from the CNN model. The predicted class, either fresh or rotten fruit, is displayed to the user along with the corresponding image. The proposed system demonstrates the potential for automating fruit quality assessment and facilitating efficient sorting and grading processes in the agricultural industry or daily use.
+\\
 \end{abstract}
 
 \begin{IEEEkeywords}
-
+Rectified Linear units, Deep Learning,
+Neural Networks, Supervised Learning, Structured Learning
 \end{IEEEkeywords}
 
 \section{Introduction}
@@ -84,9 +86,22 @@ The architecture of the model is as follows:
     \label{fig}
 \end{figure}
 
-\subsection{Why ReLU}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{AI Architecture.drawio.png}
+    \caption{Neural Network Architecture.}
+    \label{fig}
+\end{figure}
 
-Nico kan jy asb goed hier se oor ReLU
+\subsection{Utilization of ReLU}
+As ReLU, or rectified linear unit, can be effectively used in both pre-training and classification and is widely used in many applications.The structure of a deep network is complex, so it is hard to analyze the dynamics of learning process. Thus we study how complex networks need to be to approximate certain functions well. Where we optimize the trade-off between neural network complexity (measured by nonzero weights) and approximation fidelity for piecewise constant (or piecewise smooth) functions.[Analysis of Function of Rectified Linear Unit Used in Deep learning 2015]
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Activation Functions Compare.PNG}
+    \caption{Activation Functions Comparison}
+    \label{fig}
+\end{figure}
+
 
 \section{Training Process}
 
