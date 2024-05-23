@@ -39,7 +39,8 @@ Email: 33700710@mynwu.ac.za}
 \maketitle
 
 \begin{abstract}
-This paper presents a convolutional neural network (CNN) model and a mobile application for classifying fresh and rotten fruits. The CNN model is designed to distinguish between fresh and rotten apples, bananas, and oranges using image data. The model architecture consists of multiple convolutional layers, batch normalisation, dropout, and fully connected layers. The training process utilises data augmentation techniques, such as random horizontal flipping and normalisation, to enhance the model's performance. The model is trained on a dataset of fruit images and evaluated for its classification accuracy. Additionally, a mobile application is developed to integrate the trained model for real-time fruit classification. The application allows users to load fruit images, preprocess them, and obtain predictions from the CNN model. The predicted class, either fresh or rotten fruit, is displayed to the user along with the corresponding image. The proposed system demonstrates the potential for automating fruit quality assessment and facilitating efficient sorting and grading processes in the agricultural industry or daily use.
+This paper presents a convolutional neural network (CNN) model and a mobile application for classifying fresh and rotten fruits. The CNN model is designed to distinguish between fresh and rotten apples, bananas, and oranges using image data. The model architecture consists of multiple convolutional layers, batch normalization, dropout, and fully connected layers. The training process utilizes data augmentation techniques, such as random horizontal flipping and normalization, to enhance the model's performance. The model is trained on a dataset of fruit images and evaluated for its classification accuracy. Additionally, a mobile application is developed to integrate the trained model for real-time fruit classification. The application allows users to load fruit images, preprocess them, and obtain predictions from the CNN model. The predicted class, either fresh or rotten fruit, is displayed to the user along with the corresponding image. The proposed system demonstrates the potential for automating fruit quality assessment and facilitating efficient sorting and grading processes in the agricultural industry or daily use.
+\\
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -62,14 +63,21 @@ The photos in the training set is divided between the 6 classes as follows: Fres
 The photos in the testing set is divided between the 6 classes as follows: Fresh Apples contains 365 photos, Fresh Bananas contains 381 photos, Fresh Oranges contains 388 photos, Rotten Apples contains 601 photos, Rotten Bananas contains 530 photos, and Rotten Oranges contains 403 photos.
 
 The uneven distribution of the photos between the 6 classes can lead to the model falsely identify the class that a test photo belong to.
-
-\textbf{Nico asb praat oor ons preprocessing, dis hoe die prent gelees word}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Example data.png}
+    \caption{Example dataset.}
+    \vspace{0.5cm} % Add vertical space
+    \label{fig}
+\end{figure}
+\\
+Nico asb praat oor ons preprocessing, dis hoe die prent gelles word
 
 \section{Model Architecture}
 
 The model makes use of structured learning during the training phase. Structured learning makes use of labels to train a model to preform classification tasks \cite{b1}. The labels used in this model are as follows: freshapples, freshbanana, freshoranges, rottenapples, rottenbanana, and rottenoranges.
 
-The architecture of the model in Fig.1 is as follows:
+The architecture of the model is as follows:
 \begin{itemize}
     \item Input layer: Takes an input image of size (3, H, W), where 3 represents the RGB.
     \item Conv2d layers: Each convolutional layer is followed by a BatchNorm2d and ReLU activation.
@@ -82,18 +90,41 @@ The architecture of the model in Fig.1 is as follows:
     \centering
     \includegraphics[width=\linewidth]{Ai Prent.drawio (1).png}
     \caption{Neural Network Architecture.}
+    \vspace{0.5cm} % Add vertical space
+    \label{fig}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{AI Architecture.drawio.png}
+    \caption{Neural Network Architecture.}
+    \vspace{0.5cm} % Add vertical space
     \label{fig}
 \end{figure}
 
 \subsection{Utilization of ReLU}
-As ReLU, or rectified linear unit, can be effectively used in both pre-training and classification and is widely used in many applications. The structure of a deep network is complex, so it is hard to analyse the dynamics of learning process. Thus, we study how complex networks need to be to approximate certain functions well. Where we optimise the trade-off between neural network complexity (measured by nonzero weights) and approximation fidelity for piecewise constant (or piecewise smooth) functions.[Analysis of Function of Rectified Linear Unit Used in Deep learning 2015]
-
+As ReLU, or rectified linear unit, can be effectively used in both pre-training and classification and is widely used in many applications.The structure of a deep network is complex, so it is hard to analyze the dynamics of learning process. Thus we study how complex networks need to be to approximate certain functions well. Where we optimize the trade-off between neural network complexity (measured by nonzero weights) and approximation fidelity for piecewise constant (or piecewise smooth) functions.[Analysis of Function of Rectified Linear Unit Used in Deep learning 2015]
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{Activation Functions Compare.PNG}
     \caption{Activation Functions Comparison}
+    \vspace{0.5cm} % Add vertical space
     \label{fig}
 \end{figure}
+\\
+The function is defined as
+\(f(x) = max(0,x)\)
+Being computationally simple and efficient compared to other activation functions like sigmoid and tanh.Which means it requires only a thresholding at zero. This simplicity reduces the computational overhead during both the forward and backward passes of the network, speeding up the training process.
+
+ReLU does not saturate in the positive domain. Unlike sigmoid or tanh, which can suffer from vanishing gradients due to their output being bounded between 0 and 1 or -1 and 1 respectively, ReLU outputs raw positive values. This helps in maintaining a strong gradient flow, especially in deeper networks, which facilitates faster convergence[Missing]
+
+ReLU introduces sparsity by outputting zero for any input less than zero. This sparsity means that neurons are only activated for a subset of inputs, leading to a more efficient representation and reducing the risk of overfitting. Sparse activations also reduce the interdependence of neurons, making the model less likely to suffer from redundancy.[Missing]
+
+ReLU is more biologically plausible compared to functions like sigmoid and tanh. It is similar to the firing rate of biological neurons, which are either active (firing) or inactive (not firing), rather than outputting a continuous range of values.[Missing]
+
+ReLU has been empirically shown to perform well across a wide range of tasks and architectures. Many deep learning models that achieve state-of-the-art results in areas such as image recognition, natural language processing, and reinforcement learning use ReLU as the activation function.[Missing]
+
+While sigmoid and tanh suffer from the vanishing gradient problem where gradients can become extremely small during backpropagation, leading to slow learning or even stagnation, ReLU helps mitigate this issue. In the positive range, the gradient of ReLU is always one, which helps maintain gradient magnitude.[Missing]
 
 \section{Training Process}
 
@@ -142,28 +173,28 @@ The dropout layer was added to avoid overfitting the model.
 
 \section*{Acknowledgment}
 
-We would like to acknowledge Pieter Swanepoel for assisting us with the setup of the Google Colab environment.
+We would like to acknowledge Pieter Swanepoel for assisting us with the setup of the Google Colabe environment.
 
-% \section*{References}
+\section*{References}
 
-% Please number citations consecutively within brackets \cite{b1}. The 
-% sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-% number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
-% the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
+Please number citations consecutively within brackets \cite{b1}. The 
+sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
+number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
+the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
 
-% Number footnotes separately in superscripts. Place the actual footnote at 
-% the bottom of the column in which it was cited. Do not put footnotes in the 
-% abstract or reference list. Use letters for table footnotes.
+Number footnotes separately in superscripts. Place the actual footnote at 
+the bottom of the column in which it was cited. Do not put footnotes in the 
+abstract or reference list. Use letters for table footnotes.
 
-% Unless there are six authors or more give all authors' names; do not use 
-% ``et al.''. Papers that have not been published, even if they have been 
-% submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-% that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-% Capitalize only the first word in a paper title, except for proper nouns and 
-% element symbols.
+Unless there are six authors or more give all authors' names; do not use 
+``et al.''. Papers that have not been published, even if they have been 
+submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
+that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
+Capitalize only the first word in a paper title, except for proper nouns and 
+element symbols.
 
-% For papers published in translation journals, please give the English 
-% citation first, followed by the original foreign-language citation \cite{b6}.
+For papers published in translation journals, please give the English 
+citation first, followed by the original foreign-language citation \cite{b6}.
 
 \begin{thebibliography}{00}
 \bibitem{b1} Niculescu-Mizil, A. and Caruana, R., 2007, March. Inductive transfer for Bayesian network structure learning. In Artificial intelligence and statistics (pp. 339-346). PMLR.
