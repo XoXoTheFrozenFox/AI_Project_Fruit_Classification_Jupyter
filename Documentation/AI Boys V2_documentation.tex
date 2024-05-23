@@ -39,7 +39,7 @@ Email: 33700710@mynwu.ac.za}
 \maketitle
 
 \begin{abstract}
-This paper presents a convolutional neural network (CNN) model and a mobile application for classifying fresh and rotten fruits. The CNN model is designed to distinguish between fresh and rotten apples, bananas, and oranges using image data. The model architecture consists of multiple convolutional layers, batch normalization, dropout, and fully connected layers. The training process utilizes data augmentation techniques, such as random horizontal flipping and normalization, to enhance the model's performance. The model is trained on a dataset of fruit images and evaluated for its classification accuracy. Additionally, a mobile application is developed to integrate the trained model for real-time fruit classification. The application allows users to load fruit images, preprocess them, and obtain predictions from the CNN model. The predicted class, either fresh or rotten fruit, is displayed to the user along with the corresponding image. The proposed system demonstrates the potential for automating fruit quality assessment and facilitating efficient sorting and grading processes in the agricultural industry or daily use.
+This paper presents a convolutional neural network (CNN) model and a mobile application for classifying fresh and rotten fruits. The CNN model is designed to distinguish between fresh and rotten apples, bananas, and oranges using image data. The model architecture consists of multiple convolutional layers, batch normalisation, dropout, and fully connected layers. The training process utilises data augmentation techniques, such as random horizontal flipping and normalisation, to enhance the model's performance. The model is trained on a dataset of fruit images and evaluated for its classification accuracy. Additionally, a mobile application is developed to integrate the trained model for real-time fruit classification. The application allows users to load fruit images, preprocess them, and obtain predictions from the CNN model. The predicted class, either fresh or rotten fruit, is displayed to the user along with the corresponding image. The proposed system demonstrates the potential for automating fruit quality assessment and facilitating efficient sorting and grading processes in the agricultural industry or daily use.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -63,13 +63,13 @@ The photos in the testing set is divided between the 6 classes as follows: Fresh
 
 The uneven distribution of the photos between the 6 classes can lead to the model falsely identify the class that a test photo belong to.
 
-Nico asb praat oor ons preprocessing, dis hoe die prent gelles word
+\textbf{Nico asb praat oor ons preprocessing, dis hoe die prent gelees word}
 
 \section{Model Architecture}
 
 The model makes use of structured learning during the training phase. Structured learning makes use of labels to train a model to preform classification tasks \cite{b1}. The labels used in this model are as follows: freshapples, freshbanana, freshoranges, rottenapples, rottenbanana, and rottenoranges.
 
-The architecture of the model is as follows:
+The architecture of the model in Fig.1 is as follows:
 \begin{itemize}
     \item Input layer: Takes an input image of size (3, H, W), where 3 represents the RGB.
     \item Conv2d layers: Each convolutional layer is followed by a BatchNorm2d and ReLU activation.
@@ -86,7 +86,8 @@ The architecture of the model is as follows:
 \end{figure}
 
 \subsection{Utilization of ReLU}
-As ReLU, or rectified linear unit, can be effectively used in both pre-training and classification and is widely used in many applications.The structure of a deep network is complex, so it is hard to analyze the dynamics of learning process. Thus we study how complex networks need to be to approximate certain functions well. Where we optimize the trade-off between neural network complexity (measured by nonzero weights) and approximation fidelity for piecewise constant (or piecewise smooth) functions.[Analysis of Function of Rectified Linear Unit Used in Deep learning 2015]
+As ReLU, or rectified linear unit, can be effectively used in both pre-training and classification and is widely used in many applications. The structure of a deep network is complex, so it is hard to analyse the dynamics of learning process. Thus, we study how complex networks need to be to approximate certain functions well. Where we optimise the trade-off between neural network complexity (measured by nonzero weights) and approximation fidelity for piecewise constant (or piecewise smooth) functions.[Analysis of Function of Rectified Linear Unit Used in Deep learning 2015]
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{Activation Functions Compare.PNG}
@@ -94,25 +95,56 @@ As ReLU, or rectified linear unit, can be effectively used in both pre-training 
     \label{fig}
 \end{figure}
 
-
 \section{Training Process}
 
+The process of training the model went through different iterations.
+
+With the first iteration we only had 1 convolutional layer with a batch size of 128 and the training was done on the CPU. This caused that the model would take longer to train, and the model was not accurate with classifying the if fruit are fresh or rotten. During the second iteration the model still had 1 convolutional layer but be lessened the batch size to 64 and the training was moved from the CPU to the GPU. A smaller batch size helps to increase the accuracy of an AI model \cite{b2} and helps prevent overfitting the model, and by moving the training from the CPU to the GPU we experienced a decrease in the time that it takes the model to train. But we still had a problem with the accuracy of the model.
+
+The third iteration was the iteration where the amount of convolutional layers was increased from 1 to 4. This help to reduce the complexity of the model through the optimisation of each layer outputs \cite{b3}. For the forth iteration a Google Colab environment was used to train the model and the batch size was decreased to 32. By using Google Colab we were able to train the model by using a cloud base GPU. This allowed us to decrease the time that it toke the model to train.
+
+The fifth iteration was the final iteration and for this iteration we changed the amount of epochs from 50 to 150. By changing the epoch the amount of time that the model will work through the training \cite{b4}. To avoid overfitting the AI model we added a patience variable.
+
 \section{Experimentation and Results}
+
+In order to create the final AI model that would is used in the application we preformed different experiments. These experiments include changing the epochs, changing the batch size, adding dropout layers, adding more convolutional layers, and adding a patience variable.
+
+\subsection{Changing the Epochs}
+
+With the first and second iterations of training the model the epoch was set to 20. From the third and forth iterations the epoch was set to 50. The fifth and final iteration the epoch was set to 150.
+
+The epoch for the first and second iterations was chosen since it was the testing phase to find the best epoch for the model. For the third and forth iterations the epoch was set to 50 after reading \cite{b4} and testing, but the model was still not accurate. The final epoch for the fifth iteration was chosen since we wanted the model to train in one sitting, this was found to be the most effective epoch for training.
+
+\subsection{Changing the Batch size}
+
+The original batch size for training the model was 128. During the course of the iterative process of training the model the batch size was decreased to 64 and in the final iteration of training the model the batch size was decreased to 32.
+
+This was done to increase the accuracy of the model after training, since by decreasing the batch size meant that the model would look at more images during the training process.
+
+\subsection{More Convolutional Layers}
+
+\subsection{Adding Dropout Layers}
+
+Before third iteration of the training process, the model did not have a dropout layer. The dropout layer was only added in the third iteration of the training process.
+
+The dropout layer was added to avoid overfitting the model.
+
+\subsection{Adding a Patience Variable}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{Loss_per_Epoch_Graph.png}
     \caption{Loss per Epoch.}
-    \label{fig}
+    \label{fig 3}
 \end{figure}
 
 \section{Conclusion}
 
 \section*{Acknowledgment}
 
-We would like to acknowledge Pieter Swanepoel for assisting us with the setup of the Google Colabe environment.
+We would like to acknowledge Pieter Swanepoel for assisting us with the setup of the Google Colab environment.
 
-\section*{References}
+% \section*{References}
 
 % Please number citations consecutively within brackets \cite{b1}. The 
 % sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
@@ -135,12 +167,10 @@ We would like to acknowledge Pieter Swanepoel for assisting us with the setup of
 
 \begin{thebibliography}{00}
 \bibitem{b1} Niculescu-Mizil, A. and Caruana, R., 2007, March. Inductive transfer for Bayesian network structure learning. In Artificial intelligence and statistics (pp. 339-346). PMLR.
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
+\bibitem{b2} McCandlish, S., Kaplan, J., Amodei, D. and Team, O.D., 2018. An empirical model of large-batch training. arXiv preprint arXiv:1812.06162.
+\bibitem{b3} O'shea, K. and Nash, R., 2015. An introduction to convolutional neural networks. arXiv preprint arXiv:1511.08458.
+\bibitem{b4} Brownlee, J., 2018. What is the Difference Between a Batch and an Epoch in a Neural Network. Machine learning mastery, 20.
+
 \end{thebibliography}
 
 \end{document}
