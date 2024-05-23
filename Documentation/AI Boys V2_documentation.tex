@@ -67,11 +67,10 @@ The uneven distribution of the photos between the 6 classes can lead to the mode
     \centering
     \includegraphics[width=\linewidth]{Example data.png}
     \caption{Example dataset.}
-    \vspace{0.5cm} % Add vertical space
     \label{fig}
 \end{figure}
 \\
-Nico asb praat oor ons preprocessing, dis hoe die prent gelles word
+\textbf{Nico asb praat oor ons preprocessing, dis hoe die prent gelles word}
 
 \section{Model Architecture}
 
@@ -90,7 +89,6 @@ The architecture of the model is as follows:
     \centering
     \includegraphics[width=\linewidth]{Ai Prent.drawio (1).png}
     \caption{Neural Network Architecture.}
-    \vspace{0.5cm} % Add vertical space
     \label{fig}
 \end{figure}
 
@@ -98,7 +96,6 @@ The architecture of the model is as follows:
     \centering
     \includegraphics[width=\linewidth]{AI Architecture.drawio.png}
     \caption{Neural Network Architecture.}
-    \vspace{0.5cm} % Add vertical space
     \label{fig}
 \end{figure}
 
@@ -108,7 +105,6 @@ As ReLU, or rectified linear unit, can be effectively used in both pre-training 
     \centering
     \includegraphics[width=\linewidth]{Activation Functions Compare.PNG}
     \caption{Activation Functions Comparison}
-    \vspace{0.5cm} % Add vertical space
     \label{fig}
 \end{figure}
 \\
@@ -150,17 +146,32 @@ The epoch for the first and second iterations was chosen since it was the testin
 
 The original batch size for training the model was 128. During the course of the iterative process of training the model the batch size was decreased to 64 and in the final iteration of training the model the batch size was decreased to 32.
 
-This was done to increase the accuracy of the model after training, since by decreasing the batch size meant that the model would look at more images during the training process.
+This was done to increase the accuracy of the model after training, since by decreasing the batch size meant that the model would look at more images during the training process. Fig. 5 is a visual representation of how one of the batches look.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Batch_Representation.jpg}
+    \caption{Visual Representation of a Batch}
+    \label{fig}
+\end{figure}
 
 \subsection{More Convolutional Layers}
+
+During the first 2 iterations of the training process our model only had 1 convolutional layer, this was done at first only to see if it is possible to create and train our own model. 
+
+The third iteration was the first iteration where more layers were added. In this iteration the amount of convolutional layers went form 1 to 4 layers, this was done to increase the accuracy of the model by reducing the complexity of the convolutional network \cite{b3}.
 
 \subsection{Adding Dropout Layers}
 
 Before third iteration of the training process, the model did not have a dropout layer. The dropout layer was only added in the third iteration of the training process.
 
-The dropout layer was added to avoid overfitting the model.
+The dropout layer was added to avoid overfitting the model. The dropout layer works by removing neurons from the network based on their activation \cite{b5}. If the activation of a neuron in the network is greater than our dropout value, which is 0.5, the likelihood of deactivating the neuron is increased.
 
 \subsection{Adding a Patience Variable}
+
+Since the epoch for the training of the model was 50 or less we did not add a patience variable, but since with the fifth and final iteration with the epoch set to 150 it was needed to add a patience variable, to ensure that once the model reached a state where there was no longer any improvement the model would stop training.
+
+The patience variable for the training of the model was set to 10. And to measure if the model was improving we add a loss function. The loss was calculated by dividing the running loss of the epoch by the size of the train dataset. The lower the loss value the more accurate the model is, and this value is saved as the best loss value. In order for the patience variable to take effect the best loss value would have to be the same for 10 epochs. If the best loss value staid the same for the 10 epochs the model would stop training. Since if the model would continue training after no impairments where made there would be a chance that the model could be overfitted \cite{b5}. Fig. 5 shows how the loss value decreased with each epoch.
 
 \begin{figure}[h]
     \centering
@@ -175,32 +186,33 @@ The dropout layer was added to avoid overfitting the model.
 
 We would like to acknowledge Pieter Swanepoel for assisting us with the setup of the Google Colabe environment.
 
-\section*{References}
+% \section*{References}
 
-Please number citations consecutively within brackets \cite{b1}. The 
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
+% Please number citations consecutively within brackets \cite{b1}. The 
+% sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
+% number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
+% the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
 
-Number footnotes separately in superscripts. Place the actual footnote at 
-the bottom of the column in which it was cited. Do not put footnotes in the 
-abstract or reference list. Use letters for table footnotes.
+% Number footnotes separately in superscripts. Place the actual footnote at 
+% the bottom of the column in which it was cited. Do not put footnotes in the 
+% abstract or reference list. Use letters for table footnotes.
 
-Unless there are six authors or more give all authors' names; do not use 
-``et al.''. Papers that have not been published, even if they have been 
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-Capitalize only the first word in a paper title, except for proper nouns and 
-element symbols.
+% Unless there are six authors or more give all authors' names; do not use 
+% ``et al.''. Papers that have not been published, even if they have been 
+% submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
+% that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
+% Capitalize only the first word in a paper title, except for proper nouns and 
+% element symbols.
 
-For papers published in translation journals, please give the English 
-citation first, followed by the original foreign-language citation \cite{b6}.
+% For papers published in translation journals, please give the English 
+% citation first, followed by the original foreign-language citation \cite{b6}.
 
 \begin{thebibliography}{00}
 \bibitem{b1} Niculescu-Mizil, A. and Caruana, R., 2007, March. Inductive transfer for Bayesian network structure learning. In Artificial intelligence and statistics (pp. 339-346). PMLR.
 \bibitem{b2} McCandlish, S., Kaplan, J., Amodei, D. and Team, O.D., 2018. An empirical model of large-batch training. arXiv preprint arXiv:1812.06162.
 \bibitem{b3} O'shea, K. and Nash, R., 2015. An introduction to convolutional neural networks. arXiv preprint arXiv:1511.08458.
 \bibitem{b4} Brownlee, J., 2018. What is the Difference Between a Batch and an Epoch in a Neural Network. Machine learning mastery, 20.
+\bibitem{b5} Santos, C.F.G.D. and Papa, J.P., 2022. Avoiding overfitting: A survey on regularization methods for convolutional neural networks. ACM Computing Surveys (CSUR), 54(10s), pp.1-25.
 
 \end{thebibliography}
 
