@@ -40,7 +40,6 @@ Email: 33700710@mynwu.ac.za}
 
 \begin{abstract}
 This paper presents a convolutional neural network (CNN) model and a mobile application for classifying fresh and rotten fruits. The CNN model is designed to distinguish between fresh and rotten apples, bananas, and oranges using image data. The model architecture consists of multiple convolutional layers, batch normalization, dropout, and fully connected layers. The training process utilizes data augmentation techniques, such as random horizontal flipping and normalization, to enhance the model's performance. The model is trained on a dataset of fruit images and evaluated for its classification accuracy. Additionally, a mobile application is developed to integrate the trained model for real-time fruit classification. The application allows users to load fruit images, preprocess them, and obtain predictions from the CNN model. The predicted class, either fresh or rotten fruit, is displayed to the user along with the corresponding image. The proposed system demonstrates the potential for automating fruit quality assessment and facilitating efficient sorting and grading processes in the agricultural industry or daily use.
-\\
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -86,13 +85,6 @@ The architecture of the model is as follows:
     \label{fig}
 \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{AI Architecture.drawio.png}
-    \caption{Neural Network Architecture.}
-    \label{fig}
-\end{figure}
-
 \subsection{Utilization of ReLU}
 As ReLU, or rectified linear unit, can be effectively used in both pre-training and classification and is widely used in many applications.The structure of a deep network is complex, so it is hard to analyze the dynamics of learning process. Thus we study how complex networks need to be to approximate certain functions well. Where we optimize the trade-off between neural network complexity (measured by nonzero weights) and approximation fidelity for piecewise constant (or piecewise smooth) functions.[Analysis of Function of Rectified Linear Unit Used in Deep learning 2015]
 \begin{figure}[h]
@@ -122,24 +114,24 @@ We would like to acknowledge Pieter Swanepoel for assisting us with the setup of
 
 \section*{References}
 
-Please number citations consecutively within brackets \cite{b1}. The 
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
+% Please number citations consecutively within brackets \cite{b1}. The 
+% sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
+% number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
+% the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
 
-Number footnotes separately in superscripts. Place the actual footnote at 
-the bottom of the column in which it was cited. Do not put footnotes in the 
-abstract or reference list. Use letters for table footnotes.
+% Number footnotes separately in superscripts. Place the actual footnote at 
+% the bottom of the column in which it was cited. Do not put footnotes in the 
+% abstract or reference list. Use letters for table footnotes.
 
-Unless there are six authors or more give all authors' names; do not use 
-``et al.''. Papers that have not been published, even if they have been 
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-Capitalize only the first word in a paper title, except for proper nouns and 
-element symbols.
+% Unless there are six authors or more give all authors' names; do not use 
+% ``et al.''. Papers that have not been published, even if they have been 
+% submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
+% that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
+% Capitalize only the first word in a paper title, except for proper nouns and 
+% element symbols.
 
-For papers published in translation journals, please give the English 
-citation first, followed by the original foreign-language citation \cite{b6}.
+% For papers published in translation journals, please give the English 
+% citation first, followed by the original foreign-language citation \cite{b6}.
 
 \begin{thebibliography}{00}
 \bibitem{b1} Niculescu-Mizil, A. and Caruana, R., 2007, March. Inductive transfer for Bayesian network structure learning. In Artificial intelligence and statistics (pp. 339-346). PMLR.
