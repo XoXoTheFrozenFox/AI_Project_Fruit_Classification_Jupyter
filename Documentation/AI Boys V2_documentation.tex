@@ -94,7 +94,9 @@ The uneven distribution of the photos between the 6 classes can lead to the mode
     \label{fig}
 \end{figure}
 \\
-\textbf{Nico asb praat oor ons preprocessing, dis hoe die prent gelles word}
+For the training dataset, the images are preprocessed through several steps. First, they are resized to a fixed size of 224x224 pixels. Then, random horizontal flipping is applied, which is a data augmentation technique to increase the diversity of training data. Next, the images are converted to PyTorch tensors, scaling the pixel values to the range [0, 1]. Finally, the images are normalized by subtracting the mean values [0.485, 0.456, 0.409] from each color channel (RGB) and dividing by the standard deviations [0.229, 0.224, 0.225].
+
+For the test dataset, the preprocessing steps are similar but without the random horizontal flipping step. The images are resized to 224x224 pixels, converted to PyTorch tensors with pixel values scaled to [0, 1], and normalized using the same mean and standard deviation values as the training dataset. Consistent preprocessing between the training and test data is essential for accurate model evaluation and inference.
 
 \section{Model Architecture}
 
@@ -124,7 +126,7 @@ The architecture of the model is as follows:
 \end{figure}
 
 \subsection{Utilization of ReLU}
-As ReLU, or rectified linear unit, can be effectively used in both pre-training and classification and is widely used in many applications.The structure of a deep network is complex, so it is hard to analyze the dynamics of learning process. Thus we study how complex networks need to be to approximate certain functions well. Where we optimize the trade-off between neural network complexity (measured by nonzero weights) and approximation fidelity for piecewise constant (or piecewise smooth) functions.[Analysis of Function of Rectified Linear Unit Used in Deep learning 2015]
+As ReLU, or rectified linear unit, can be effectively used in both pre-training and classification and is widely used in many applications.The structure of a deep network is complex, so it is hard to analyze the dynamics of learning process. Thus we study how complex networks need to be to approximate certain functions well. Where we optimize the trade-off between neural network complexity (measured by nonzero weights) and approximation fidelity for piecewise constant (or piecewise smooth) functions \cite{b1}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{Activation Functions Compare.PNG}
@@ -134,9 +136,9 @@ As ReLU, or rectified linear unit, can be effectively used in both pre-training 
 \\
 \\
 The function is defined as
-\(f(x) = max(0,x)\)
+\textbf{\(f(x) = max(0,x)\)}
 \\
-\\
+
 Being computationally simple and efficient compared to other activation functions like sigmoid and tanh.Which means it requires only a thresholding at zero. This simplicity reduces the computational overhead during both the forward and backward passes of the network, speeding up the training process.
 
 ReLU does not saturate in the positive domain. Unlike sigmoid or tanh, which can suffer from vanishing gradients due to their output being bounded between 0 and 1 or -1 and 1 respectively, ReLU outputs raw positive values. This helps in maintaining a strong gradient flow, especially in deeper networks, which facilitates faster convergence[Missing]
@@ -173,7 +175,7 @@ The epoch for the first and second iterations was chosen since it was the testin
 
 The original batch size for training the model was 128. During the course of the iterative process of training the model the batch size was decreased to 64 and in the final iteration of training the model the batch size was decreased to 32.
 
-This was done to increase the accuracy of the model after training, since by decreasing the batch size meant that the model would look at more images during the training process. Fig. 5 is a visual representation of how one of the batches look.
+This was done to increase the accuracy of the model after training, since by decreasing the batch size meant that the model would look at more images during the training process. Fig. 7 is a visual representation of how one of the batches look.
 
 \begin{figure}[h]
     \centering
@@ -241,8 +243,7 @@ We would like to acknowledge Pieter Swanepoel for assisting us with the setup of
 \bibitem{b4} Brownlee, J., 2018. What is the Difference Between a Batch and an Epoch in a Neural Network. Machine learning mastery, 20.
 \bibitem{b5} Santos, C.F.G.D. and Papa, J.P., 2022. Avoiding overfitting: A survey on regularization methods for convolutional neural networks. ACM Computing Surveys (CSUR), 54(10s), pp.1-25.
 \bibitem{b6} Gu, J. et al., 2018. Recent advances in convolutional neural networks. Pattern Recognition, Volume 77, pp. 354-377.
-
-
+\bibitem{b7} Kazuyuki, H., Daisuke, S. , Hayaru Shouno, 2015. Analysis of function of rectified linear unit used in deep learning. In: 2015 International Joint Conference on Neural Networks. s.l.:s.n., pp. 1-8.
 \end{thebibliography}
 
 \end{document}
