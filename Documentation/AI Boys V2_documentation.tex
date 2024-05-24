@@ -1,6 +1,7 @@
 \documentclass[conference]{IEEEtran}
 \IEEEoverridecommandlockouts
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{hyperref}
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
@@ -50,7 +51,30 @@ Neural Networks, Supervised Learning, Structured Learning
 
 \section{Introduction}
 
-It is known that some people find it difficult to identify whether fruit is fresh or rotten. This can be due to various factors such as visual impairments, lack of experience, or subtle signs of decay that are not easily detectable. To address this issue, we have developed an Artificial Intelligence (AI) model designed to determine if certain fruits are fresh or if they are rotten. The fruits that we trained the model on are apples, bananas, and oranges.
+It is known that some individuals might find it difficult to identify whether fruit is fresh or rotten. This can be due to various factors such as visual impairments, lack of experience, or subtle signs of decay that are not easily detectable. To address this issue, the development of an Artificial Intelligence (AI) model designed to determine whether certain fruits are fresh or if they are rotten. The fruits that are trained to the model are apples, bananas, and oranges.
+
+The Convolutional Neural Network (CNN) is a renowned deep learning architecture that draws inspiration from living species' innate visual perception mechanisms.There are multiple variants and adaptations of a conventional CNN design. However, the essential components remain quite the same \cite{b6}.
+
+Consider the widely recognised LeNet-5, which is made up of three types of layers: convolutional, pooling, and fully-connected. It can accurately represent the original image, allowing for visual pattern recognition with little preprocessing \cite{b6}.
+\\
+The convolutional layer is designed to learn feature representations of the inputs.Specifically, each neuron of a feature map is linked to an area of nearby neurons in the preceding layer. In the preceding layer, this area was referred to as the neuron's receptive field \cite{b6}.
+\\
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Lenet-5 Network.png}
+    \caption{Lenet-5 Network by }
+    \label{fig}
+\end{figure}
+\\
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{CNN Components.png}
+    \caption{CNN Broad Categories by}
+    \label{fig}
+\end{figure}
+\\
+Many works have be done to propose improvements to its performance such as the following.
+Increasing depth improves the network's ability to estimate the target function with nonlinearity and provide better feature representations. However, this increases network complexity, making it more challenging to optimise and prone to overfitting \cite{b6}.
 
 \section{Dataset and Preprocessing}
 
@@ -108,8 +132,11 @@ As ReLU, or rectified linear unit, can be effectively used in both pre-training 
     \label{fig}
 \end{figure}
 \\
+\\
 The function is defined as
 \(f(x) = max(0,x)\)
+\\
+\\
 Being computationally simple and efficient compared to other activation functions like sigmoid and tanh.Which means it requires only a thresholding at zero. This simplicity reduces the computational overhead during both the forward and backward passes of the network, speeding up the training process.
 
 ReLU does not saturate in the positive domain. Unlike sigmoid or tanh, which can suffer from vanishing gradients due to their output being bounded between 0 and 1 or -1 and 1 respectively, ReLU outputs raw positive values. This helps in maintaining a strong gradient flow, especially in deeper networks, which facilitates faster convergence[Missing]
@@ -213,6 +240,8 @@ We would like to acknowledge Pieter Swanepoel for assisting us with the setup of
 \bibitem{b3} O'shea, K. and Nash, R., 2015. An introduction to convolutional neural networks. arXiv preprint arXiv:1511.08458.
 \bibitem{b4} Brownlee, J., 2018. What is the Difference Between a Batch and an Epoch in a Neural Network. Machine learning mastery, 20.
 \bibitem{b5} Santos, C.F.G.D. and Papa, J.P., 2022. Avoiding overfitting: A survey on regularization methods for convolutional neural networks. ACM Computing Surveys (CSUR), 54(10s), pp.1-25.
+\bibitem{b6} Gu, J. et al., 2018. Recent advances in convolutional neural networks. Pattern Recognition, Volume 77, pp. 354-377.
+
 
 \end{thebibliography}
 
