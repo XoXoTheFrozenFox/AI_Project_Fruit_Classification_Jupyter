@@ -84,30 +84,65 @@ if os.path.exists(model_path):
     net.load_state_dict(torch.load(model_path))
     print("Loaded saved model.")
 
-optimizer = optim.Adam(net.parameters(), lr=0.0001)
-cross_el = nn.CrossEntropyLoss()
-
 # Define the number of EPOCHS
-EPOCHS = 6
+import torch.optim as optim
+from torch.optim.lr_scheduler import ReduceLROnPlateau
+
+EPOCHS = 150
+patience = 10 # Early stopping patience
 i = 0
+
+# Initialize optimizer and learning rate scheduler
+optimizer = optim.Adam(net.parameters(), lr=0.001)
+cross_el = nn.CrossEntropyLoss()
+scheduler = ReduceLROnPlateau(optimizer, 'min', patience=2, factor=0.1)
+
+best_loss = float('inf')
+no_improvement_epochs = 0
 
 # Training loop
 for epoch in range(EPOCHS):
-    print("Epoch:", epoch+1)
-    net.train()
-    for data in data_loader['train']:
-        x, y = data[0].to(device), data[1].to(device)  # Move data to GPU
-        optimizer.zero_grad()
-        output = net(x)
-        loss = cross_el(output, y)
-        loss.backward()
-        optimizer.step()
-        i += 1  # Iterate through epochs
-        print(i)
-    # Save the model after each epoch
-    torch.save(net.state_dict(), model_path)
-    print("Model saved after epoch", epoch+1)
+    print(f"Epoch: {epoch + 1}")
+    net.train()  # Set the model to training mode
+    running_loss = 0.0  # Initialize running loss for the epoch
 
+    for batch_idx, data in enumerate(data_loader['train']):
+        x, y = data[0].to(device), data[1].to(device)  # Move data to GPU
+        optimizer.zero_grad()  # Clear gradients from the previous step
+        output = net(x)  # Forward pass
+        loss = cross_el(output, y)  # Compute loss
+        loss.backward()  # Backpropagation
+        optimizer.step()  # Update model parameters
+
+        running_loss += loss.item()  # Accumulate loss
+        i += 1  # Increment step counter
+        print(i)
+        # Print loss every 100 batches (for example)
+        if (batch_idx + 1) % 100 == 0:
+            print(f"Batch {batch_idx + 1}/{len(data_loader['train'])}, Loss: {loss.item()}")
+
+    # Calculate and print average loss for the epoch
+    average_loss = running_loss / len(data_loader['train'])
+    print(f"Average Loss for Epoch {epoch + 1}: {average_loss}")
+
+    # Check for early stopping
+    if average_loss < best_loss:
+        best_loss = average_loss
+        no_improvement_epochs = 0
+        # Save the best model
+        torch.save(net.state_dict(), model_path)
+        print(f"Best model saved after epoch {epoch + 1}")
+    else:
+        no_improvement_epochs += 1
+        print(f"No improvement for {no_improvement_epochs} epochs")
+
+    # Adjust learning rate based on validation loss
+    scheduler.step(average_loss)
+
+    # Stop training if no improvement for several epochs
+    if no_improvement_epochs >= patience:
+        print("Early stopping triggered")
+        break
 k = 0
 j = 0
 correct = 0
