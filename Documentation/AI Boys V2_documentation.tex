@@ -62,19 +62,23 @@ The convolutional layer is designed to learn feature representations of the inpu
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{Lenet-5 Network.png}
-    \caption{Lenet-5 Network by }
+    \caption{Lenet-5 Network by \cite{b6}.}
     \label{fig}
 \end{figure}
 \\
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{CNN Components.png}
-    \caption{CNN Broad Categories by}
+    \caption{CNN Broad Categories by \cite{b6}.}
     \label{fig}
 \end{figure}
 \\
 Many works have be done to propose improvements to its performance such as the following.
 Increasing depth improves the network's ability to estimate the target function with nonlinearity and provide better feature representations. However, this increases network complexity, making it more challenging to optimise and prone to overfitting \cite{b6}.
+
+\subsection{Background reading}
+
+\subsection{Research}
 
 \section{Dataset and Preprocessing}
 
@@ -136,8 +140,11 @@ As ReLU, or rectified linear unit, can be effectively used in both pre-training 
 \\
 \\
 The function is defined as
-\textbf{\(f(x) = max(0,x)\)}
-\\
+\[f(x) = x^{\ +\ } = \max(0,x) = \frac{x+|x|}{2} = \begin{cases}
+x & \text{if } x > 0\\
+0 & \text{otherwise}
+\end{cases}
+\]
 
 Being computationally simple and efficient compared to other activation functions like sigmoid and tanh.Which means it requires only a thresholding at zero. This simplicity reduces the computational overhead during both the forward and backward passes of the network, speeding up the training process.
 \\
@@ -154,16 +161,45 @@ While sigmoid and tanh suffer from the vanishing gradient problem where gradient
 
 \subsection{Utilization of Colabs}
 Colab is a hosted Jupyter Notebook service which needs no setup and offers free computing resources such as GPUs and TPUs. Colab is particularly well-suited for machine learning, data science, and teaching.
+Colab, or "Colaboratory", allows you to write and execute Python in your browser, with
+\begin{itemize}
+    \item Zero configuration required
+    \item Easy sharing
+    \item Access to GPUs free of charge
+\end{itemize}
 \subsection{Utilization of Epochs}
+In machine learning, an epoch represents one complete pass of the training dataset through the algorithm. The epoch number is a crucial hyperparameter for the method. It sets the number of epochs or full passes that the entire training dataset will go through throughout the algorithm's training or learning phase.Where each epoch updates the dataset's internal model parameters \cite{b8}.
 
+Visualised as a 'for-loop' with a certain epoch number, with each loop route spanning the full training dataset. The for-loop is a nested for-loop that iterates over a specified sample number in a single batch when the sample's "batch size" is set to one. The number of epochs used in training methods can range in the hundreds, and the process is programmed to continue until the model error is sufficiently minimised \cite{b8}.
 \subsection{Utilization of Python}
+Python is a high-level interpreted programming language with a focus on readability. It is easy to learn and can use systems-level programming languages when needed. Python is a popular language for data science, machine learning, and scientific computing due to its community-supported tools and libraries \cite{b9}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{The standard Python ecosystem for machine learning, data science, and scientific computing.png}
+    \caption{The standard Python ecosystem for machine learning, data science, and scientific computing by \cite{b9}.}
+    \label{fig}
+\end{figure}
+
 \subsection{Utilization of pytorch}
+PyTorch, introduced in 2017, has gained widespread popularity among researchers and developers for its dynamic computation graphs, which allow real-time interaction with computations. This feature facilitates experimentation and debugging, making PyTorch particularly attractive for research purposes. PyTorch's imperative programming style, familiar to Python users, further eases the development process. Additionally, PyTorch integrates well with other Python-based tools and includes reverse-mode automatic differentiation for gradient computation. Provide users with tools for manually running machine learning pipelines from start to finish.The purpose is to automate one or more phases of these machine learning processes.Making it easy for non-experts to develop machine learning models while reducing repetitive activities allows experienced engineers to build better models quicker \cite{b9}.
+
+Despite its higher computational cost, PyTorch's ease of use and flexibility have led to its dominance in deep learning research, outpacing static graph frameworks like TensorFlow.
+
 \subsection{Utilization of torchvision}
+Torchvision is a PyTorch package that provides computer vision-specific functionality. It comprises datasets, model structures, and picture transformations that help with the creation and implementation of vision-related activities. Torchvision's datasets module provides pre-loaded data like as CIFAR-10 and ImageNet, allowing for rapid testing and prototyping. The models module offers implementations of prominent architectures like as ResNet and VGG, allowing users to quickly apply cutting-edge models. Torchvision also supports a number of picture modifications for data augmentation and preprocessing, which improves model performance and generalisation \cite{b9}.
+
 \subsection{Utilization of matplotlib}
+Matplotlib is a popular Python machine learning toolkit for constructing static, interactive, and animated visualisations in plots and charts. It is especially effective for visualising the properties of a model's learnt parameters and their interactions with data, allowing patterns to emerge that might be difficult to see otherwise. This competence is critical for understanding and interpreting complicated models, particularly black-box models such as neural networks \cite{b9}
+
 \subsection{Utilization of numpy}
+NumPy is a fundamental library for scientific computing and machine learning in Python, providing efficient operations on large, multi-dimensional arrays and matrices. It serves as the base for many other scientific libraries, including SciPy and Pandas, offering a wide range of mathematical and logical operations. NumPy leverages low-level languages like C and Fortran to ensure high performance, especially for linear algebra computations and other array manipulations, making it a cornerstone for computational tasks in Python \cite{b9}.
 
 \subsection{Utilization of patience value}
+To calculate the optimal validation loss, we adopted an early stopping method, which caused calculation to stop if the validation loss value did not
+improve.
 \subsection{Utilization of different types of layers}
+The benefits of using many layers in  neural networks are numerous and well established. Adding extra layers to a neural network design can significantly improve predicting performance. For example, expanding the ResNet architecture from ResNet-18 to ResNet-200, which increases the number of layers, resulted in a fourfold increase in top-1 accuracy on the ImageNet dataset. This gain is due to the capacity of deeper networks to catch more complicated patterns and hierarchical aspects of the incoming data \cite{b9}.
 
 \section{Training Process}
 
@@ -258,6 +294,8 @@ We would like to acknowledge Pieter Swanepoel for assisting us with the setup of
 \bibitem{b5} Santos, C.F.G.D. and Papa, J.P., 2022. Avoiding overfitting: A survey on regularization methods for convolutional neural networks. ACM Computing Surveys (CSUR), 54(10s), pp.1-25.
 \bibitem{b6} Gu, J. et al., 2018. Recent advances in convolutional neural networks. Pattern Recognition, Volume 77, pp. 354-377.
 \bibitem{b7} Kazuyuki, H., Daisuke, S. , Hayaru Shouno, 2015. Analysis of function of rectified linear unit used in deep learning. In: 2015 International Joint Conference on Neural Networks. s.l.:s.n., pp. 1-8.
+\bibitem{b8} Brownlee, J., 2018. What is the Difference Between a Batch and an Epoch in a Neural Network. Machine learning mastery, Volume 20.
+\bibitem{b9} Raschka, S., Patterson, J. & Nolet, C., 2020. Machine Learning in Python: Main Developments and Technology Trends in Data Science, Machine Learning, and Artificial Intelligence. Information, 11(4).
 \end{thebibliography}
 
 \end{document}
