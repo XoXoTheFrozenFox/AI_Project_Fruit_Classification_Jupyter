@@ -240,8 +240,8 @@ class FruitClassifierApp(App):
             popup_layout.add_widget(popup_image)
             popup_layout.add_widget(close_button)
 
-            self.popup = Popup(title='Preprocessed Image', content=popup_layout, size_hint=(0.8, 0.8))
-            self.popup.open()
+            #self.popup = Popup(title='Preprocessed Image', content=popup_layout, size_hint=(0.8, 0.8))
+            #self.popup.open()
         except Exception as e:
             print(f"Error in show_preprocessed_image: {e}")
 
