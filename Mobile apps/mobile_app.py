@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import torchvision.transforms as transforms
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -7,7 +8,9 @@ from kivy.uix.button import Button
 from kivy.uix.image import Image as KivyImage
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
+from kivy.uix.popup import Popup
 from kivy.graphics import Rectangle, Color
+from kivy.core.image import Image as CoreImage
 from PIL import Image as PILImage
 import io
 import os
@@ -16,39 +19,27 @@ import os
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv_layers = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2),
-            nn.Dropout(0.5),
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.BatchNorm2d(128),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2),
-            nn.Dropout(0.5),
-            nn.Conv2d(128, 256, kernel_size=3, padding=1),
-            nn.BatchNorm2d(256),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2),
-            nn.Dropout(0.5),
-            nn.Conv2d(256, 512, kernel_size=3, padding=1),
-            nn.BatchNorm2d(512),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2),
-            nn.Dropout(0.5)
-        )
-        self.fc_layers = nn.Sequential(
-            nn.Linear(512 * 14 * 14, 512),
-            nn.ReLU(),
-            nn.Dropout(0.5),
-            nn.Linear(512, 6)
-        )
+        self.conv1 = nn.Conv2d(3, 64, kernel_size=3, padding=1)
+        self.bn1 = nn.BatchNorm2d(64)
+        self.conv2 = nn.Conv2d(64, 128, kernel_size=3, padding=1)
+        self.bn2 = nn.BatchNorm2d(128)
+        self.conv3 = nn.Conv2d(128, 256, kernel_size=3, padding=1)
+        self.bn3 = nn.BatchNorm2d(256)
+        self.conv4 = nn.Conv2d(256, 512, kernel_size=3, padding=1)
+        self.bn4 = nn.BatchNorm2d(512)
+        self.dropout = nn.Dropout(0.5)
+        self.fc1 = nn.Linear(512 * 14 * 14, 512)
+        self.fc2 = nn.Linear(512, 6)
+        self.relu = nn.ReLU()
 
     def forward(self, x):
-        x = self.conv_layers(x)
+        x = self.dropout(F.max_pool2d(self.relu(self.bn1(self.conv1(x))), 2))
+        x = self.dropout(F.max_pool2d(self.relu(self.bn2(self.conv2(x))), 2))
+        x = self.dropout(F.max_pool2d(self.relu(self.bn3(self.conv3(x))), 2))
+        x = self.dropout(F.max_pool2d(self.relu(self.bn4(self.conv4(x))), 2))
         x = torch.flatten(x, 1)
-        x = self.fc_layers(x)
+        x = self.dropout(self.relu(self.fc1(x)))
+        x = self.fc2(x)
         return x
 
 class FruitClassifierApp(App):
@@ -85,13 +76,31 @@ class FruitClassifierApp(App):
 
     def load_model(self):
         try:
-            model_path = 'fruit_classifier_scripted.pt'
-            if not os.path.exists(model_path):
-                raise FileNotFoundError(f"Model file '{model_path}' not found")
+            model_path_scripted = 'fruit_classifier_scripted.pt'
+            model_path_pth = 'fruit_classifier.pth'
             
-            self.model = torch.jit.load(model_path, map_location=torch.device('cpu'))
+            if not os.path.exists(model_path_scripted):
+                if not os.path.exists(model_path_pth):
+                    raise FileNotFoundError(f"Model file '{model_path_pth}' not found")
+                
+                # Load the .pth model
+                model = Net()
+                model.load_state_dict(torch.load(model_path_pth, map_location=torch.device('cpu')))
+                
+                # Script the model
+                scripted_model = torch.jit.script(model)
+                
+                # Save the scripted model
+                torch.jit.save(scripted_model, model_path_scripted)
+                print(f"Scripted model saved to '{model_path_scripted}'")
+
+            # Load the scripted model
+            self.model = torch.jit.load(model_path_scripted, map_location=torch.device('cpu'))
             self.model.eval()
             print("Model loaded successfully")
+        
+        except FileNotFoundError as fnf_error:
+            print(f"File not found error: {fnf_error}")
         except Exception as e:
             print(f"Error in load_model: {e}")
 
@@ -100,8 +109,9 @@ class FruitClassifierApp(App):
             image_path = self.open_file_dialog()
             if image_path:
                 print(f"Image path: {image_path}")
-                prediction = self.predict_image(image_path)
+                prediction, preprocessed_image = self.predict_image(image_path)
                 self.display_prediction(image_path, prediction)
+                self.show_preprocessed_image(preprocessed_image)
         except Exception as e:
             print(f"Error in load_image: {e}")
 
@@ -134,7 +144,7 @@ class FruitClassifierApp(App):
 
             predicted_class = torch.argmax(output).item()
             print(f"Predicted class index: {predicted_class}")
-            return predicted_class
+            return predicted_class, image_tensor
         except Exception as e:
             print(f"Error in predict_image: {e}")
 
@@ -164,11 +174,40 @@ class FruitClassifierApp(App):
             buf = io.BytesIO()
             image.save(buf, format='png')
             buf.seek(0)
-            texture = texture.create(size=(image.width, image.height), colorfmt='rgb')
-            texture.blit_buffer(buf.read(), colorfmt='rgb', bufferfmt='ubyte')
+            texture = CoreImage(buf, ext='png').texture
             return texture
         except Exception as e:
-            print("")
+            print(f"Error in load_image_to_texture: {e}")
+
+    def show_preprocessed_image(self, preprocessed_image):
+        try:
+            # Convert the tensor to a PIL image
+            unloader = transforms.ToPILImage()
+            image = preprocessed_image.squeeze(0)  # Remove the batch dimension
+            image = unloader(image)
+
+            # Save the preprocessed image to a buffer
+            buf = io.BytesIO()
+            image.save(buf, format='png')
+            buf.seek(0)
+            texture = CoreImage(buf, ext='png').texture
+
+            # Create a new Popup window to show the preprocessed image
+            popup_layout = BoxLayout(orientation='vertical')
+            popup_image = KivyImage(texture=texture)
+            close_button = Button(text="Close", size_hint_y=0.1, on_press=self.close_popup)
+
+            popup_layout.add_widget(popup_image)
+            popup_layout.add_widget(close_button)
+
+            #self.popup = Popup(title='Preprocessed Image', content=popup_layout, size_hint=(0.8, 0.8))
+            #self.popup.open()
+        except Exception as e:
+            print(f"Error in show_preprocessed_image: {e}")
+
+    def close_popup(self, instance):
+        if hasattr(self, 'popup'):
+            self.popup.dismiss()
 
 if __name__ == '__main__':
     FruitClassifierApp().run()
