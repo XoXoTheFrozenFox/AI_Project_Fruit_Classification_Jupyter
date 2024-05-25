@@ -79,11 +79,14 @@ class FruitClassifierApp(App):
         welcome_panel = WelcomePanel()
         root_layout.add_widget(welcome_panel)
 
-        # Add image display and buttons
-        self.image = KivyImage(source='C:/CODE/Code/CODE ON GITHUB/AI_Project_Fruit_Classification_Jupyter/Mobile apps/background.png')
+        # Add image display
+        self.image = KivyImage(source='C:/CODE(DO NOT DELETE PLS)/AI_Project_Fruit_Classification_Jupyter/Mobile apps/background.png')
         root_layout.add_widget(self.image)
         self.label = Label(text='', size_hint_y=0.1)
 
+        # Create a BoxLayout for the buttons at the bottom
+        buttons_layout = BoxLayout(size_hint_y=None, height=dp(60), spacing=dp(10))
+        buttons_layout.add_widget(Widget())  # Spacer
         # Load Image Button
         self.button = Button(
             text='Load Image',
@@ -93,25 +96,23 @@ class FruitClassifierApp(App):
         )
         self.button.border_radius = [15]
         self.button.background_color = (0.2, 0.7, 0.3, 1)
-        button_layout = BoxLayout(size_hint_y=0.1, padding=(dp(20), 0))
-        button_layout.add_widget(self.button)
+        buttons_layout.add_widget(self.button)
 
         # More Information Button
         self.btn1 = Button(
             text='More information',
             size_hint=(None, None),
-            size=(dp(120), dp(40)),
+            size=(dp(180), dp(40)),  # Adjusted size for more information button
             on_press=self.on_more_info_click
         )
         self.btn1.border_radius = [15]
         self.btn1.background_color = (0.2, 0.7, 0.3, 1)
-        moreinfo_layout = BoxLayout(size_hint_y=0.1, padding=(dp(650), 40))
-        moreinfo_layout.add_widget(self.btn1)
+        buttons_layout.add_widget(self.btn1)
+        buttons_layout.add_widget(Widget())  # Spacer
 
         # Add widgets to root layout
         root_layout.add_widget(self.label)
-        root_layout.add_widget(button_layout)
-        root_layout.add_widget(moreinfo_layout)
+        root_layout.add_widget(buttons_layout)
 
         return root_layout
 
