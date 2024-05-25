@@ -140,7 +140,8 @@ The function is defined as
 \\
 
 Being computationally simple and efficient compared to other activation functions like sigmoid and tanh.Which means it requires only a thresholding at zero. This simplicity reduces the computational overhead during both the forward and backward passes of the network, speeding up the training process.
-
+\\
+\\
 ReLU does not saturate in the positive domain. Unlike sigmoid or tanh, which can suffer from vanishing gradients due to their output being bounded between 0 and 1 or -1 and 1 respectively, ReLU outputs raw positive values. This helps in maintaining a strong gradient flow, especially in deeper networks, which facilitates faster convergence[Missing]
 
 ReLU introduces sparsity by outputting zero for any input less than zero. This sparsity means that neurons are only activated for a subset of inputs, leading to a more efficient representation and reducing the risk of overfitting. Sparse activations also reduce the interdependence of neurons, making the model less likely to suffer from redundancy.[Missing]
@@ -150,6 +151,19 @@ ReLU is more biologically plausible compared to functions like sigmoid and tanh.
 ReLU has been empirically shown to perform well across a wide range of tasks and architectures. Many deep learning models that achieve state-of-the-art results in areas such as image recognition, natural language processing, and reinforcement learning use ReLU as the activation function.[Missing]
 
 While sigmoid and tanh suffer from the vanishing gradient problem where gradients can become extremely small during backpropagation, leading to slow learning or even stagnation, ReLU helps mitigate this issue. In the positive range, the gradient of ReLU is always one, which helps maintain gradient magnitude.[Missing]
+
+\subsection{Utilization of Colabs}
+Colab is a hosted Jupyter Notebook service which needs no setup and offers free computing resources such as GPUs and TPUs. Colab is particularly well-suited for machine learning, data science, and teaching.
+\subsection{Utilization of Epochs}
+
+\subsection{Utilization of Python}
+\subsection{Utilization of pytorch}
+\subsection{Utilization of torchvision}
+\subsection{Utilization of matplotlib}
+\subsection{Utilization of numpy}
+
+\subsection{Utilization of patience value}
+\subsection{Utilization of different types of layers}
 
 \section{Training Process}
 
