@@ -8,7 +8,9 @@ from kivy.uix.button import Button
 from kivy.uix.image import Image as KivyImage
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
+from kivy.uix.popup import Popup
 from kivy.graphics import Rectangle, Color
+from kivy.core.image import Image as CoreImage
 from PIL import Image as PILImage
 import io
 import os
@@ -107,8 +109,9 @@ class FruitClassifierApp(App):
             image_path = self.open_file_dialog()
             if image_path:
                 print(f"Image path: {image_path}")
-                prediction = self.predict_image(image_path)
+                prediction, preprocessed_image = self.predict_image(image_path)
                 self.display_prediction(image_path, prediction)
+                self.show_preprocessed_image(preprocessed_image)
         except Exception as e:
             print(f"Error in load_image: {e}")
 
@@ -141,7 +144,7 @@ class FruitClassifierApp(App):
 
             predicted_class = torch.argmax(output).item()
             print(f"Predicted class index: {predicted_class}")
-            return predicted_class
+            return predicted_class, image_tensor
         except Exception as e:
             print(f"Error in predict_image: {e}")
 
@@ -171,11 +174,40 @@ class FruitClassifierApp(App):
             buf = io.BytesIO()
             image.save(buf, format='png')
             buf.seek(0)
-            texture = texture.create(size=(image.width, image.height), colorfmt='rgb')
-            texture.blit_buffer(buf.read(), colorfmt='rgb', bufferfmt='ubyte')
+            texture = CoreImage(buf, ext='png').texture
             return texture
         except Exception as e:
-            print("")
+            print(f"Error in load_image_to_texture: {e}")
+
+    def show_preprocessed_image(self, preprocessed_image):
+        try:
+            # Convert the tensor to a PIL image
+            unloader = transforms.ToPILImage()
+            image = preprocessed_image.squeeze(0)  # Remove the batch dimension
+            image = unloader(image)
+
+            # Save the preprocessed image to a buffer
+            buf = io.BytesIO()
+            image.save(buf, format='png')
+            buf.seek(0)
+            texture = CoreImage(buf, ext='png').texture
+
+            # Create a new Popup window to show the preprocessed image
+            popup_layout = BoxLayout(orientation='vertical')
+            popup_image = KivyImage(texture=texture)
+            close_button = Button(text="Close", size_hint_y=0.1, on_press=self.close_popup)
+
+            popup_layout.add_widget(popup_image)
+            popup_layout.add_widget(close_button)
+
+            #self.popup = Popup(title='Preprocessed Image', content=popup_layout, size_hint=(0.8, 0.8))
+            #self.popup.open()
+        except Exception as e:
+            print(f"Error in show_preprocessed_image: {e}")
+
+    def close_popup(self, instance):
+        if hasattr(self, 'popup'):
+            self.popup.dismiss()
 
 if __name__ == '__main__':
     FruitClassifierApp().run()
