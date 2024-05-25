@@ -11,14 +11,19 @@ from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.graphics import Rectangle, Color
 from kivy.core.image import Image as CoreImage
+from kivy.metrics import dp
+from kivy.uix.popup import Popup
 from PIL import Image as PILImage
+from bs4 import BeautifulSoup
+import requests
 import io
 import os
+import re
 
-# Define your model class
+# Define the neural network model
 class Net(nn.Module):
     def __init__(self):
-        super().__init__()
+        super(Net, self).__init__()
         self.conv1 = nn.Conv2d(3, 64, kernel_size=3, padding=1)
         self.bn1 = nn.BatchNorm2d(64)
         self.conv2 = nn.Conv2d(64, 128, kernel_size=3, padding=1)
@@ -42,6 +47,20 @@ class Net(nn.Module):
         x = self.fc2(x)
         return x
 
+# Define the welcome panel
+class WelcomePanel(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.orientation = 'vertical'
+        self.size_hint_y = 0.2
+        welcome_label = Label(
+            text="Welcome to the Fruit Classifier App!",
+            font_size=24,
+            color=(1, 1, 1, 1)
+        )
+        self.add_widget(welcome_label)
+
+# Define the main app class
 class FruitClassifierApp(App):
     class_names = {
         0: "Fresh Apple",
@@ -54,42 +73,63 @@ class FruitClassifierApp(App):
 
     def build(self):
         self.load_model()
-        self.layout = BoxLayout(orientation='vertical')
-        
-        # Set the background color of the main layout to black
-        with self.layout.canvas.before:
-            Color(0, 0, 0, 1)  # Black color
-            self.rect = Rectangle(size=self.layout.size, pos=self.layout.pos)
-        
-        self.image = KivyImage()
-        
-        # Add the KivyImage widget directly to the main layout
-        self.layout.add_widget(self.image)
-        
+        root_layout = BoxLayout(orientation='vertical')
+
+        # Add welcome panel
+        welcome_panel = WelcomePanel()
+        root_layout.add_widget(welcome_panel)
+
+        # Add image display and buttons
+        self.image = KivyImage(source='C:/Users/Nico/Downloads/background.png')
+        root_layout.add_widget(self.image)
         self.label = Label(text='', size_hint_y=0.1)
-        self.button = Button(text='Load Image', on_press=self.load_image)
-        
-        self.layout.add_widget(self.label)
-        self.layout.add_widget(self.button)
-        
-        return self.layout
+
+        # Load Image Button
+        self.button = Button(
+            text='Load Image',
+            size_hint=(None, None),
+            size=(dp(120), dp(40)),
+            on_press=self.load_image
+        )
+        self.button.border_radius = [15]
+        self.button.background_color = (0.2, 0.7, 0.3, 1)
+        button_layout = BoxLayout(size_hint_y=0.1, padding=(dp(20), 0))
+        button_layout.add_widget(self.button)
+
+        # More Information Button
+        self.btn1 = Button(
+            text='More information',
+            size_hint=(None, None),
+            size=(dp(120), dp(40)),
+            on_press=self.on_more_info_click
+        )
+        self.btn1.border_radius = [15]
+        self.btn1.background_color = (0.2, 0.7, 0.3, 1)
+        moreinfo_layout = BoxLayout(size_hint_y=0.1, padding=(dp(650), 40))
+        moreinfo_layout.add_widget(self.btn1)
+
+        # Add widgets to root layout
+        root_layout.add_widget(self.label)
+        root_layout.add_widget(button_layout)
+        root_layout.add_widget(moreinfo_layout)
+
+        return root_layout
 
     def load_model(self):
         try:
             model_path_scripted = 'fruit_classifier_scripted.pt'
             model_path_pth = 'fruit_classifier.pth'
-            
+
             if not os.path.exists(model_path_scripted):
                 if not os.path.exists(model_path_pth):
                     raise FileNotFoundError(f"Model file '{model_path_pth}' not found")
-                
                 # Load the .pth model
+
                 model = Net()
                 model.load_state_dict(torch.load(model_path_pth, map_location=torch.device('cpu')))
-                
                 # Script the model
                 scripted_model = torch.jit.script(model)
-                
+
                 # Save the scripted model
                 torch.jit.save(scripted_model, model_path_scripted)
                 print(f"Scripted model saved to '{model_path_scripted}'")
@@ -98,7 +138,7 @@ class FruitClassifierApp(App):
             self.model = torch.jit.load(model_path_scripted, map_location=torch.device('cpu'))
             self.model.eval()
             print("Model loaded successfully")
-        
+
         except FileNotFoundError as fnf_error:
             print(f"File not found error: {fnf_error}")
         except Exception as e:
@@ -155,8 +195,8 @@ class FruitClassifierApp(App):
             self.image.source = image_path
             self.image.reload()
 
-            predicted_class_name = self.get_class_name(prediction)
-            self.label.text = f'Predicted class: {predicted_class_name}'
+            self.predicted_class_name = self.get_class_name(prediction)
+            self.label.text = f'Predicted class: {self.predicted_class_name}'
         except Exception as e:
             print(f"Error in display_prediction: {e}")
 
@@ -183,9 +223,9 @@ class FruitClassifierApp(App):
         try:
             # Convert the tensor to a PIL image
             unloader = transforms.ToPILImage()
-            image = preprocessed_image.squeeze(0)  # Remove the batch dimension
+            image = preprocessed_image.squeeze(0) # Remove the batch dimension
             image = unloader(image)
-
+            
             # Save the preprocessed image to a buffer
             buf = io.BytesIO()
             image.save(buf, format='png')
@@ -200,14 +240,90 @@ class FruitClassifierApp(App):
             popup_layout.add_widget(popup_image)
             popup_layout.add_widget(close_button)
 
-            #self.popup = Popup(title='Preprocessed Image', content=popup_layout, size_hint=(0.8, 0.8))
-            #self.popup.open()
+            self.popup = Popup(title='Preprocessed Image', content=popup_layout, size_hint=(0.8, 0.8))
+            self.popup.open()
         except Exception as e:
             print(f"Error in show_preprocessed_image: {e}")
 
-    def close_popup(self, instance):
-        if hasattr(self, 'popup'):
-            self.popup.dismiss()
 
+    def clean_prediction(self, prediction):
+        """
+        Remove the words 'fresh' or 'rotten' from the prediction.
+        """
+        cleaned_prediction = re.sub(r'\b(?:fresh|rotten)\b', '', prediction, flags=re.IGNORECASE).strip()
+        return cleaned_prediction
+    
+    def on_more_info_click(self, instance):
+        try:
+            if hasattr(self, 'predicted_class_name'):
+                cleaned_prediction = self.clean_prediction(self.predicted_class_name)
+                if 'Rotten' in self.predicted_class_name:
+                    self.show_rotten_popup()
+                else:
+                    calories = self.fetch_calories(cleaned_prediction)
+                    self.show_calories_popup(calories)
+            else:
+                self.show_no_fruit_detected_popup()
+        except Exception as e:
+            print(f"Error in on_more_info_click: {e}")
+
+    def fetch_calories(self, prediction):
+        try:
+            url = f'https://www.google.com/search?&q=calories in {prediction}'
+            req = requests.get(url).text
+            scrap = BeautifulSoup(req, 'html.parser')
+            calories = scrap.find("div", class_="BNeawe iBp4i AP7Wnd").text
+            return calories
+        except Exception as e:
+            print(f"Can't fetch the Calories: {e}")
+            return "Unable to fetch calories information"
+        
+    def show_rotten_popup(self):
+        try:
+            popup_layout = BoxLayout(orientation='vertical', padding=10)
+            message_label = Label(text="Sorry, no information available on rotten fruit.")
+            close_button = Button(text="Close", size_hint_y=0.2, on_press=self.close_popup)
+
+            popup_layout.add_widget(message_label)
+            popup_layout.add_widget(close_button)
+
+            self.popup = Popup(title='Information', content=popup_layout, size_hint=(0.6, 0.4))
+            self.popup.open()
+        except Exception as e:
+            print(f"Error in show_rotten_popup: {e}")
+
+    def show_calories_popup(self, calories):
+        try:
+            popup_layout = BoxLayout(orientation='vertical', padding=10)
+            calories_label = Label(text=f'Calories: {calories}', font_size=24)
+            close_button = Button(text="Close", size_hint_y=0.2, on_press=self.close_popup)
+
+            popup_layout.add_widget(calories_label)
+            popup_layout.add_widget(close_button)
+
+            self.popup = Popup(title='Calories Information', content=popup_layout, size_hint=(0.6, 0.4))
+            self.popup.open()
+        except Exception as e:
+            print(f"Error in show_calories_popup: {e}")
+
+    def show_no_fruit_detected_popup(self):
+        try:
+            popup_layout = BoxLayout(orientation='vertical', padding=10)
+            message_label = Label(text="No fruit detected.")
+            close_button = Button(text="Close", size_hint_y=0.2, on_press=self.close_popup)
+
+            popup_layout.add_widget(message_label)
+            popup_layout.add_widget(close_button)
+
+            self.popup = Popup(title='Information', content=popup_layout, size_hint=(0.6, 0.4))
+            self.popup.open()
+        except Exception as e:
+            print(f"Error in show_no_fruit_detected_popup: {e}")
+
+
+    def close_popup(self, instance):
+        self.popup.dismiss()
+
+# Run the app
 if __name__ == '__main__':
     FruitClassifierApp().run()
