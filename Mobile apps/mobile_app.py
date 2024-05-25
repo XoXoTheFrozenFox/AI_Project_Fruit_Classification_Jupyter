@@ -80,7 +80,7 @@ class FruitClassifierApp(App):
         root_layout.add_widget(welcome_panel)
 
         # Add image display
-        self.image = KivyImage(source='C:/CODE(DO NOT DELETE PLS)/AI_Project_Fruit_Classification_Jupyter/Mobile apps/background.png')
+        self.image = KivyImage(source='C:/CODE/Code/CODE ON GITHUB/AI_Project_Fruit_Classification_Jupyter/Mobile apps/background.png')
         root_layout.add_widget(self.image)
         self.label = Label(text='', size_hint_y=0.1)
 
