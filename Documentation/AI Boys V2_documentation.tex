@@ -150,7 +150,7 @@ The uneven distribution of the photos between the 6 classes can lead to the mode
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\linewidth]{Example data.png}
+    \includegraphics[width=\linewidth]{Example_data.png}
     \caption{Example dataset.}
     \label{fig}
 \end{figure}
@@ -183,7 +183,7 @@ The architecture of the model, as seen in Fig. \ref{fig2}, is as follows:
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\linewidth]{Ai Prent.drawio (1).png}
+    \includegraphics[width=\linewidth]{Ai_Prent.drawio_1_1.png}
     \caption{Neural Network Architecture.}
     \label{fig2}
 \end{figure}
@@ -193,7 +193,7 @@ The architecture of the model, as seen in Fig. \ref{fig2}, is as follows:
 Rectified Linear Unit (ReLU) can be effectively used in both pre-training and classification and is widely used in many applications \cite{b7}. The structure of a deep network is complex, so it is hard to analyse the dynamics of learning process thus, we study how complex networks need to be to approximate certain functions \cite{b7}. In this process, we optimize the trade-off between neural network complexity (measured by nonzero weights) and approximation fidelity for piecewise constant (or piecewise smooth) functions \cite{b7}.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\linewidth]{Activation Functions Compare.PNG}
+    \includegraphics[width=\linewidth]{Activation_Functions_Compare.PNG}
     \caption{Activation Functions Comparison}
     \label{fig}
 \end{figure}
@@ -228,7 +228,7 @@ With the first iteration we only had 1 convolutional layer with a batch size of 
 
 The third iteration was the iteration where the amount of convolutional layers was increased from 1 to 4. This help to reduce the complexity of the model through the optimisation of each layer outputs \cite{b3}. For the forth iteration a Google Colab environment was used to train the model and the batch size was decreased to 32. By using Google Colab we were able to train the model by using a cloud base GPU. This allowed us to decrease the time that it toke the model to train.
 
-The fifth iteration was the final iteration and for this iteration we changed the amount of epochs from 50 to 150. By changing the epoch the amount of time that the model will work through the training \cite{b4}. To avoid overfitting the AI model we added a patience variable.
+The fifth iteration was the final iteration and for this iteration we changed the amount of epochs from 50 to 150. By changing the epoch the amount of time that the model will work through the training \cite{b4}. To avoid overfitting the AI model we added a patience variable. 
 
 \section{Experimentation and Results}
 
@@ -278,9 +278,12 @@ The patience variable for the training of the model was set to 10. And to measur
     \label{fig5}
 \end{figure}
 
+\subsection{Learning Rate}
+The learning rate for the fruit freshness detection AI model was 0.001. The reason for chosen this learning rate for the model is because the optimal learning rate must be between 0.01 and 0.001 \cite{34}.
+
 \section{Shortcomings of the Model}
 
-Although the model can correctly classifying fruits that are part of the dataset that the model has been trained on as.
+Although the model can correctly classifying fruits that are part of the dataset that the model has been trained on, with an accuracy of 0.981.
 
 \subsection{Limited data}
 
@@ -351,9 +354,7 @@ In images, noise refers to random variations in brightness or color that degrade
 
 \section{Results and Discusion}
 
-\subsection{Presentation of Result}
-
-\subsubsection{Single layer}
+\subsection{Single layer}
 
 \begin{figure}[h]
     \centering
@@ -497,8 +498,9 @@ In images, noise refers to random variations in brightness or color that degrade
     \caption{First Version Classification of Rotten Fruit.}
     \label{Fig1R}
 \end{figure}
+\clearpage
 
-\subsubsection{Multi layer}
+\subsection{Multi layer}
 
 \begin{figure}[h]
     \centering
@@ -575,6 +577,7 @@ In images, noise refers to random variations in brightness or color that degrade
     \label{FigMF}
 \end{figure}
 
+
 \begin{figure}[h]
     \centering
     \begin{subfigure}[b]{0.48\linewidth}
@@ -642,6 +645,7 @@ In images, noise refers to random variations in brightness or color that degrade
     \caption{Final Version Classification of Rotten Fruit.}
     \label{FigMR}
 \end{figure}
+\clearpage
 
 \subsection{Tabular Comparison}
 
@@ -649,7 +653,7 @@ In images, noise refers to random variations in brightness or color that degrade
     \centering
     \includegraphics[width=\linewidth]{Ek wil huil.png}
     \caption{Comparison Table.}
-    \label{figSl}
+    \label{figHuil}
 \end{figure}
 
 \begin{figure}[h]
@@ -668,8 +672,12 @@ In images, noise refers to random variations in brightness or color that degrade
         \label{figFB}
     \end{subfigure}
     \caption{Graphs of different versions.}
-    \label{FigLimDataV}
-\end{figure}
+    \label{FigGraph}
+\end{figure}.
+
+\subsection{Single Layer Vs. Multi Layer Conclusion}
+
+The Single layer model had achieved a score of 5 out of 15. The Multi layer model had achieved a score of 15 out of 15. See Fig. \ref{figHuil} and Fig. \ref{FigGraph} for details. Both of the models were trained on a learning rate of 0.001 and 100 Epochs. The multi layer model had a patience variable implemented with a value of 10, which protected the model against overtraining. In conclusion, the multi layer model worked a lot better than the single layer model.
 
 \section{Potential Future Development}
 
@@ -708,10 +716,9 @@ The following list are features that could be implemented in the future:
     \item \textit{fruit\_classifier.pth}
 \end{itemize}
 
+
 \section{Document information}
-The document was created using a IEEE Overleaf LaTeX style.  We used Harvard referencing for the project's paper. The inline citation style used was Vancouver.
-
-
+The document was created using an IEEE Overleaf LaTeX style.  We used Harvard referencing for the project's paper. The inline citation style used was Vancouver.
 
 \section{Conclusion}
 
@@ -748,6 +755,7 @@ We would like to acknowledge Pieter Swanepoel for assisting us with the setup of
     \bibitem{b3} O'shea, K. and Nash, R., 2015. An introduction to convolutional neural networks. arXiv preprint arXiv:1511.08458.+
     \bibitem{b30} Oostwal, E., Straat, M. and Biehl, M., 2021. Hidden unit specialization in layered neural networks: ReLU vs. sigmoidal activation. Physica A: Statistical Mechanics and its Applications, 564, p.125517.
     \bibitem{b9} Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., Killeen, T., Lin, Z., Gimelshein, N., Antiga, L. and Desmaison, A., 2019. Pytorch: An imperative style, high-performance deep learning library. Advances in neural information processing systems, 32.
+    \bibitem{b34} Pramoditha, R. (2022, September 21). How to Choose the Optimal Learning Rate for Neural Networks: Guidelines for tuning the most important neural network hyperparameter with examples. Towards Data Science. Retrieved from https://towardsdatascience.com/how-to-choose-the-optimal-learning-rate-for-neural-networks-9545d063fdb5
     \bibitem{b29} Rahutomo, R. et al., 2019. Artificial intelligence model implementation in web-based application for pineapple object counting. 2019 International Conference on Information Management and Technology (ICIMTech), Volume 1, pp. 525-530.
     \bibitem{b33} Raschka, S., Patterson, J. , Nolet, C., 2020. Machine Learning in Python:Main Developments and Technology Trends in Data Science, Machine
     Learning, and Artificial Intelligence. Information, 11(4).
