@@ -39,8 +39,6 @@ North-West University\\
 Email: 33700710@mynwu.ac.za}
 }
 \maketitle
-\thispagestyle{plain}
-\pagestyle{plain}
 
 \begin{abstract}
 This paper presents a convolutional neural network (CNN) model and a mobile application for classifying fresh and rotten fruits. The CNN model is designed to distinguish between fresh and rotten apples, bananas, and oranges using image data. The model architecture consists of multiple convolutional layers, batch normalisation, dropout, and fully connected layers. The training process utilizes data augmentation techniques, such as random horizontal flipping and normalisation, to enhance the model's performance. The model is trained on a dataset of fruit images and evaluated for its classification accuracy. Additionally, a mobile application is developed to integrate the trained model for real-time fruit classification. The application allows users to load fruit images, preprocess them, and obtain predictions from the CNN model. The predicted class, either fresh or rotten fruit, is displayed to the user along with the corresponding image. The proposed system demonstrates the potential for automating fruit quality assessment and facilitating efficient sorting and grading processes in the agricultural industry or daily use.
@@ -52,9 +50,9 @@ Rectified Linear units (ReLU), Deep Learning, Neural Networks, Structured Learni
 
 \section{Introduction}
 
-It is known that some individuals might find it difficult to identify whether fruit is fresh or rotten. This can be due to various factors such as visual impairments, lack of experience, or subtle signs of decay that are not easily detectable \cite{b22}. To address this issue, an Artificial Intelligence (AI) model will be developed to determine whether fruits are fresh or rotten. The model is trained on the followed fruits: apples, bananas, and oranges.
+It is known that some individuals might find it difficult to identify whether fruit is fresh or rotten. This can be due to various factors such as visual impairments, lack of experience, or subtle signs of decay that are not easily detectable \cite{b22}. To address this issue, an Artificial Intelligence (AI) model will be developed to determine whether fruits are fresh or rotten. The model is trained on the following fruits: apples, bananas, and oranges.
 
-The Convolutional Neural Network (CNN) is a renowned deep learning architecture that draws inspiration from living species' innate visual perception mechanisms \cite{b21}. There are multiple variants and adaptations of a conventional CNN design \cite{b6} can be seen in Fig. \ref{figCNN}. However, the essential components remain quite the same \cite{b6}.
+The Convolutional Neural Network (CNN) is a renowned deep learning architecture that draws inspiration from living species' innate visual perception mechanisms \cite{b21}. There are multiple variants and adaptations of a conventional CNN design, can be seen in Fig. \ref{figCNN}, however the essential components remain quite the same \cite{b6}.
 
 Consider the widely recognised LeNet-5, shown in Fig. \ref{figLeNet}, which is made up of three types of layers: convolutional, pooling, and fully-connected \cite{b6}. It can accurately represent the original image, allowing for visual pattern recognition with little preprocessing \cite{b6}.
 
@@ -76,7 +74,7 @@ Many research studies have been done to propose improvements to its performance 
     \label{figCNN}
 \end{figure}
 
-Convolutional Neural Networks (CNNs) are deep neural networks often used for image analysis.  It can recognise images, classify them, detect objects, and identify faces. CNN comprises of neurons with learnable weights and biases. Neurons may process several inputs by creating a point as a product and possibly following it with nonlinearity. The network still expresses a single scoring function, distinguishing between raw picture pixels and class scores.  CNN provides computational efficiency through convolution, spatial integration, and parameter sharing. Thus, it enables CNN models to operate on any platform, even mobile devices \cite{b26}. Being utilized in clinical research for medical image analysis, with a strong emphasis on the clinical aspects of the field \cite{b25} along with face recognition, action recognition, image classification and natural language processing \cite{b24}.
+CNNs are deep neural networks that are often used for image analysis.  It can recognise images, classify them, detect objects, and identify faces. CNN comprises of neurons with learnable weights and biases. Neurons may process several inputs by creating a point as a product and possibly following it with nonlinearity. The network still expresses a single scoring function, distinguishing between raw picture pixels and class scores.  CNN provides computational efficiency through convolution, spatial integration, and parameter sharing. Thus, it enables CNN models to operate on any platform, even mobile devices \cite{b26}. Being utilized in clinical research for medical image analysis, with a strong emphasis on the clinical aspects of the field \cite{b25} along with face recognition, action recognition, image classification and natural language processing \cite{b24}.
 
 Deep learning is a recent trend in machine learning and artificial intelligence research \cite{b27}. Many notable advancements have occurred in this sector across the world. Such studies include deep learning that can be used as an automatic system for plant counting \cite{b28}\cite{b29}.
 
@@ -84,7 +82,7 @@ Deep learning is a recent trend in machine learning and artificial intelligence 
 
 \subsection{Python}
 
-Python is used by many AI developers all around the world \cite{b8}. The reason for this is that Python plays a major role as a tool for scientific computing \cite{b8}. Reference \cite{b8} stated that the reason why Python is very popular for AI is for the following reasons:
+Python is used by many AI developers all around the world \cite{b8}. The reason for this is that Python plays a major role as a tool for scientific computing \cite{b8}. Reference \cite{b8} stated that the reason for Python's popularity for AI is for the following reasons:
 
 \subsubsection{Easy to use}
 
@@ -112,7 +110,9 @@ Python, with its extensive packages like TensorFlow, Keras, and Theano, greatly 
 
 \subsubsection{Has a huge community base}
 
-Python boasts a vast community of engineers and data scientists on platforms like Python.org, Fullstackpython.com, and Realpython.com, where developers can share issues and ideas, while the Python Package Index serves as an excellent resource for exploring the language's capabilities, with continuous improvements made by developers enhancing Python over time \cite{b8}.
+Python boasts a vast community of engineers and data scientists on platforms like Python.org, Fullstackpython.com, and Realpython.com, where developers can share issues and ideas, while the Python Package Index serves as an excellent resource for exploring the language's capabilities \cite{b8}.
+
+For the reasons mentioned above Python was chosen as the programming language to create and train the model.
 
 \subsection{PyTorch and TorchVision}
 
@@ -120,21 +120,29 @@ PyTorch is a Python machine learning library that shows that the 2 goals of deep
 
 TorchVision is a package that is available in the PyTorch library. This package consists out of various datasets, pre-trained models, and image processing tools and techniques \cite{b10}. We choose TorchVision of its image processing tools and techniques.
 
+PyTorch was chosen since it is easier to understand than TensorFlow. TorchVision is an image processing package that is part of the PyTorch library, and for this reason TorchVision was chosen.
+
 \subsection{Matplotlib and NumPy}
 
 Matplotlib is a Python plotting library \cite{b8}. With Matplotlib you can write a single script that parses and plots the data, with flexibility and consistently using the Python programming language \cite{b12}. Matplotlib was modeled after MATLAB due to MATLAB's strong graphing capabilities, and the high degree of compatibility between the two led many users to transition from MATLAB to Matplotlib, making them feel at home with the latter \cite{b12}.
 
-NumPy is a numerical Python library \cite{b8}. Since data analysis often involves operations being preformed on large lists of data, this makes NumPy a powerful tool to work quickly and easily with these data lists \cite{b8}. NumPy arrays can be treated the same as individual floats and integers, and by preforming boolean operations it is quicker to filter NumPy arrays \cite{b8}.
+NumPy is a numerical Python library \cite{b8}. Since data analysis often involves operations being performed on large lists of data \cite{b8}. NumPy is a powerful tool to work quickly and easily with these data lists \cite{b8}. NumPy arrays can be treated the same as individual floats and integers, and by preforming boolean operations it is quicker to filter NumPy arrays \cite{b8}.
+
+NumPy was used to read the images in the datasets to be read into an array and to manipulate the array, and for this reason NumPy was chosen. Matplotlib was chosen to visuale represent the batches and the size of the batches.
 
 \subsection{Kivy and Tkinter}
 
-Kivy is a Python based mobile application framework, it is easy to understand and is user-friendly \cite{b13}. By making use of the OpenGL library feature, the Kivy framework is able to make cross-platform application development tool \cite{b13}. The Kv language separates the interface design from the application logic \cite{b14}. This allows the application to remain in Python, but the design is in the Kv language \cite{b14}. The Kivy framework is used in the mobile application to display the graphical user interface (GUI).
+Kivy is a Python based mobile application framework, that is easy to understand and user-friendly \cite{b13}. By making use of the OpenGL library feature, the Kivy framework is able to make cross-platform application development tool \cite{b13}. The Kv language separates the interface design from the application logic \cite{b14}. This allows the application to remain in Python, but the design is in the Kv language \cite{b14}. The Kivy framework is used in the mobile application to display the graphical user interface (GUI).
 
-Tkinter is a framework that is build into the standard library of Python \cite{b15}. The Tkinter framework is only used by the mobile application so that the user can set the file path were the picture that must be analysed by the model.
+Tkinter is a framework that is build into the standard library of Python \cite{b15}. The Tkinter framework is only used by the mobile application so that the user can set the file path where the picture that must be analysed by the model.
+
+Kivy was chosen as the mobile application framework for its ease of understanding and for being user-friendly. Tkinter was chosen since it is build into the standard library of Python \cite{b15}, and you can not possible to choose a file path in Kivy.
 
 \subsection{Google Colaboratory}
 
 Google Colaboratory, also known as Google Colab, was made by Google and is an online framework for writing, and executing Deep Learning and Machine Learning code \cite{b16}. If a researcher does not have the resources or funding for a graphics processing unit (GPU), Google Colab provides a GPU for the researcher \cite{b16}. After mounting Google Drive onto Google Colab, it can either use as a Jupyter Notebook to write and run code directly in the cells or execute Python files stored in Google Drive from the Colab environment, similar to running them from a Linux terminal, by prefixing the command with a '!' \cite{b16}. Studies have indicated that Google Colab's hardware resources can achieve performance comparable to that of dedicated hardware \cite{b17}.
+
+Google Colab was used since the GPU, that is available on Google Colab, is more powerful than the GPU that is included in our laptops.
 
 \section{Dataset and Preprocessing}
 
@@ -224,9 +232,9 @@ While sigmoid and tanh suffer from the vanishing gradient problem where gradient
 
 The process of training the model went through different iterations.
 
-With the first iteration we only had 1 convolutional layer with a batch size of 128 and the training was done on the CPU. This caused that the model would take longer to train, and the model was not accurate with classifying the if fruit are fresh or rotten. During the second iteration the model still had 1 convolutional layer but be lessened the batch size to 64 and the training was moved from the CPU to the GPU. A smaller batch size helps to increase the accuracy of an AI model \cite{b2} and helps prevent overfitting the model, and by moving the training from the CPU to the GPU we experienced a decrease in the time that it takes the model to train. But we still had a problem with the accuracy of the model.
+With the first iteration we only had 1 convolutional layer with a batch size of 128 and the training was done on the CPU. This caused that the model would take longer to train, and the model was not accurate with classifying the if fruit are fresh or rotten. During the second iteration the model still had 1 convolutional layer, but we lessened the batch size to 64 and the training was moved from the CPU to the GPU. A smaller batch size helps to increase the accuracy of an AI model \cite{b2} and helps prevent overfitting the model, and by moving the training from the CPU to the GPU we experienced a decrease in the time that it takes the model to train. But we still had a problem with the accuracy of the model.
 
-The third iteration was the iteration where the amount of convolutional layers was increased from 1 to 4. This help to reduce the complexity of the model through the optimisation of each layer outputs \cite{b3}. For the forth iteration a Google Colab environment was used to train the model and the batch size was decreased to 32. By using Google Colab we were able to train the model by using a cloud base GPU. This allowed us to decrease the time that it toke the model to train.
+The third iteration was the iteration where the amount of convolutional layers was increased from 1 to 4. This help to reduce the complexity of the model through the optimisation of each layer outputs \cite{b3}. For the forth iteration a Google Colab environment was used to train the model and the batch size was decreased to 32. By using Google Colab we were able to train the model by using a cloud base GPU. This allowed us to decrease the time that it took the model to train.
 
 The fifth iteration was the final iteration and for this iteration we changed the amount of epochs from 50 to 150. By changing the epoch the amount of time that the model will work through the training \cite{b4}. To avoid overfitting the AI model we added a patience variable. 
 
@@ -261,7 +269,7 @@ The third iteration was the first iteration where more layers were added. In thi
 
 \subsection{Adding Dropout Layers}
 
-Before third iteration of the training process, the model did not have a dropout layer. The dropout layer was only added in the third iteration of the training process.
+Before the third iteration of the training process, the model did not have a dropout layer. The dropout layer was only added in the third iteration of the training process.
 
 The dropout layer was added to avoid overfitting the model. The dropout layer works by removing neurons from the network based on their activation \cite{b5}. If the activation of a neuron in the network is greater than our dropout value, which is 0.5, the likelihood of deactivating the neuron is increased.
 
@@ -269,7 +277,7 @@ The dropout layer was added to avoid overfitting the model. The dropout layer wo
 
 Since the epoch for the training of the model was 50 or less we did not add a patience variable, but since with the fifth and final iteration with the epoch set to 150 it was needed to add a patience variable, to ensure that once the model reached a state where there was no longer any improvement the model would stop training.
 
-The patience variable for the training of the model was set to 10. And to measure if the model was improving we add a loss function. The loss was calculated by dividing the running loss of the epoch by the size of the train dataset. The lower the loss value the more accurate the model is, and this value is saved as the best loss value. In order for the patience variable to take effect the best loss value would have to be the same for 10 epochs. If the best loss value staid the same for the 10 epochs the model would stop training. Since if the model would continue training after no impairments where made there would be a chance that the model could be overfitted \cite{b5}. Fig. \ref{fig5} shows how the loss value decreased with each epoch.
+The patience variable for the training of the model was set to 10. And to measure if the model was improving we added a loss function. The loss was calculated by dividing the running loss of the epoch by the size of the train dataset. The lower the loss value the more accurate the model is, and this value's model is saved as the best loss value. In order for the patience variable to take effect the best loss value would have to be the same for 10 epochs. If the best loss value stayed the same for the 10 epochs the model would stop training. Since if the model would continue training after no impairments where made there would be a chance that the model could be overfitted \cite{b5}. Fig. \ref{fig5} shows how the loss value decreased with each epoch.
 
 \begin{figure}[h]
     \centering
@@ -279,11 +287,11 @@ The patience variable for the training of the model was set to 10. And to measur
 \end{figure}
 
 \subsection{Learning Rate}
-The learning rate for the fruit freshness detection AI model was 0.001. The reason for chosen this learning rate for the model is because the optimal learning rate must be between 0.01 and 0.001 \cite{34}.
+The learning rate for the fruit freshness detection AI model was 0.001. The reason for chosen this learning rate for the model is because the optimal learning rate must be between 0.01 and 0.001 \cite{b34}.
 
 \section{Shortcomings of the Model}
 
-Although the model can correctly classifying fruits that are part of the dataset that the model has been trained on, with an accuracy of 0.981.
+Although the model can correctly classifying fruits that are part of the dataset that the model has been trained on, with an accuracy of 0.981. The model still has shortcomings. In this section some identified shortcomings will be discused. 
 
 \subsection{Limited data}
 
@@ -308,7 +316,7 @@ In nature there are different variants of fruits, such as a red banana \cite{b18
     \label{FigLimDataV}
 \end{figure}
 
-The current model in only trained to classify if an apple, banana, or orange either fresh if they are rotten. Fig. \ref{FigLimData} shows what that model classifies fruit that are not part of the dataset that the model was train on. In order for the model to correctly classify these fruits they would have to be added to the dataset, and a class for these fruits will have to be added to the model for both fresh and rotten.
+The current model in only trained to classify if an apple, banana, or orange are either fresh or rotten. Fig. \ref{FigLimData} shows what that model can not correctly fruit that are not part of the train dataset. In order for the model to correctly classify these fruits they would have to be added to the dataset, and a class for these fruits will have to be added to the model for both fresh and rotten.
 
 \begin{figure}[h]
     \centering
@@ -331,7 +339,7 @@ The current model in only trained to classify if an apple, banana, or orange eit
 
 \subsection{Noise in Image}
 
-In images, noise refers to random variations in brightness or color that degrade image quality, making it appear grainy or speckled, and can arise from various sources \cite{b19}. Common types of noise include Gaussian noise from sensor electronics, salt-and-pepper noise from signal disturbances, and Poisson noise from low light conditions \cite{b19}. By making use of edge detection to mark out the edges of the fruit \cite{b20} can help the model to accurately identify the class that the fruit belongs to, Fig. \ref{FigNoise} shows the result of an image wit noise and the result after edge detection have been implemented.
+In images, noise refers to random variations in brightness or color that degrade image quality, making it appear grainy or speckled, and can arise from various sources \cite{b19}. Common types of noise include Gaussian noise from sensor electronics, salt-and-pepper noise from signal disturbances, and Poisson noise from low light conditions \cite{b19}. By making use of edge detection to mark out the edges of the fruit \cite{b20}, this can help the model to accurately identify the class that the fruit belongs to, Fig. \ref{FigNoise} shows the result of an image wit noise and the result after edge detection have been implemented.
 
 \begin{figure}[h]
     \centering
@@ -368,63 +376,63 @@ In images, noise refers to random variations in brightness or color that degrade
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer appel1.png}
-        \caption{First Version Apple Classification.}
+        \caption{First Version Apple 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer appel2.png}
-        \caption{First Version Apple Classification.}
+        \caption{First Version Apple 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer appel3.png}
-        \caption{First Version Apple Classification.}
+        \caption{First Version Apple 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer banana1.png}
-        \caption{First Version Banana Classification.}
+        \caption{First Version Banana 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer banana2.png}
-        \caption{First Version Banana Classification.}
+        \caption{First Version Banana 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer banana3.png}
-        \caption{First Version Banana Classification.}
+        \caption{First Version Banana 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer orage1.png}
-        \caption{First Version Orange Classification.}
+        \caption{First Version Orange 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer orage2.png}
-        \caption{First Version Orange Classification.}
+        \caption{First Version Orange 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer orage3.png}
-        \caption{First Version Orange Classification.}
+        \caption{First Version Orange 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \caption{First Version Classification of Fresh Fruit.}
@@ -436,63 +444,63 @@ In images, noise refers to random variations in brightness or color that degrade
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer appelR1.png}
-        \caption{First Version Apple Classification.}
+        \caption{First Version Apple 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer appelR2.png}
-        \caption{First Version Apple Classification.}
+        \caption{First Version Apple 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer appelR3.png}
-        \caption{First Version Apple Classification.}
+        \caption{First Version Apple 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer bananaR1.png}
-        \caption{First Version Banana Classification.}
+        \caption{First Version Banana 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer bananaR2.png}
-        \caption{First Version Banana Classification.}
+        \caption{First Version Banana 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer bananaR3.png}
-        \caption{First Version Banana Classification.}
+        \caption{First Version Banana 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer orageR1.png}
-        \caption{First Version Orange Classification.}
+        \caption{First Version Orange 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer orageR2.png}
-        \caption{First Version Orange Classification.}
+        \caption{First Version Orange 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{1layer orageR3.png}
-        \caption{First Version Orange Classification.}
+        \caption{First Version Orange 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \caption{First Version Classification of Rotten Fruit.}
@@ -514,63 +522,63 @@ In images, noise refers to random variations in brightness or color that degrade
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer appel1.png}
-        \caption{Final Version Apple Classification.}
+        \caption{Final Version Apple 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer appel2.png}
-        \caption{Final Version Apple Classification.}
+        \caption{Final Version Apple 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer appel3.png}
-        \caption{Final Version Apple Classification.}
+        \caption{Final Version Apple 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer banana1.png}
-        \caption{Final Version Banana Classification.}
+        \caption{Final Version Banana 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer banana2.png}
-        \caption{Final Version Banana Classification.}
+        \caption{Final Version Banana 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer banana3.png}
-        \caption{Final Version Banana Classification.}
+        \caption{Final Version Banana 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer orage1.png}
-        \caption{Final Version Orange Classification.}
+        \caption{Final Version Orange 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer orage2.png}
-        \caption{Final Version Orange Classification.}
+        \caption{Final Version Orange 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer orage3.png}
-        \caption{Final Version Orange Classification.}
+        \caption{Final Version Orange 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \caption{Final Version Classification of Fresh Fruit.}
@@ -583,63 +591,63 @@ In images, noise refers to random variations in brightness or color that degrade
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer appelR1.png}
-        \caption{Final Version Apple Classification.}
+        \caption{Final Version Apple 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer appelR2.png}
-        \caption{Final Version Apple Classification.}
+        \caption{Final Version Apple 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer appelR3.png}
-        \caption{Final Version Apple Classification.}
+        \caption{Final Version Apple 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer bananaR1.png}
-        \caption{Final Version Banana Classification.}
+        \caption{Final Version Banana 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer bananaR2.png}
-        \caption{Final Version Banana Classification.}
+        \caption{Final Version Banana 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer bananaR3.png}
-        \caption{Final Version Banana Classification.}
+        \caption{Final Version Banana 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer orageR1.png}
-        \caption{Final Version Orange Classification.}
+        \caption{Final Version Orange 1 Classification.}
         \label{figFA}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer orageR2.png}
-        \caption{Final Version Orange Classification.}
+        \caption{Final Version Orange 2 Classification.}
         \label{figFB}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\linewidth}
         \centering
         \includegraphics[width=\linewidth]{Mlayer orageR3.png}
-        \caption{Final Version Orange Classification.}
+        \caption{Final Version Orange 3 Classification.}
         \label{figFB}
     \end{subfigure}
     \caption{Final Version Classification of Rotten Fruit.}
@@ -722,17 +730,17 @@ The document was created using an IEEE Overleaf LaTeX style.  We used Harvard re
 
 \section{Conclusion}
 
-In conclusion, this paper has introduced a convolutional neural network (CNN) model and a mobile application designed to classify fresh and rotten fruits, specifically apples, bananas, and oranges. The developed CNN model leverages a structured architecture consisting of multiple convolutional layers, batch normalisation, dropout, and fully connected layers, which collectively enhance the model's ability to accurately distinguish between fresh and rotten fruits. The training process was bolstered by data augmentation techniques such as random horizontal flipping and normalisation, contributing to the robustness and performance of the model.
+In conclusion, this paper has introduced a convolutional neural network (CNN) model and a mobile application designed to classify fresh and rotten fruits, specifically apples, bananas, and oranges. The developed CNN model leverages a structured architecture consisting of multiple convolutional layers, batch normalisation, dropout, and fully connected layers, which collectively enhance the model's ability to accurately distinguish between fresh and rotten fruits. The training process was helped  by data augmentation techniques such as random horizontal flipping and normalisation, contributing to the robustness and performance of the model.
 
-The integration of the trained model into a mobile application demonstrates the practical applicability of this technology, providing users with a real-time tool for fruit classification. This application preprocesses user-uploaded fruit images and outputs a classification of either fresh or rotten, displaying the results alongside the input image. This system shows significant promise in automating fruit quality assessment, which can streamline sorting and grading processes in both agricultural industries and everyday usage.
+The integration of the trained model into a mobile application demonstrates the practical applicability of this technology, providing users with a real-time tool for fruit classification. This application preprocesses user-uploaded fruit images and outputs a classification of either fresh or rotten, displaying the results alongside the input image. This model can be used to demonstrate how the automation of fruit quality assessment can be done, which streamlines sorting and grading processes in both agricultural industries and everyday usage.
 
-The iterative development process, which included varying the number of epochs, batch sizes, convolutional layers, and the inclusion of dropout layers, was crucial in achieving an optimal balance between model accuracy and training efficiency. The final model demonstrated improved performance and reliability, though there remain certain limitations. For instance, the model's accuracy is inherently linked to the quality and diversity of the training dataset, indicating potential areas for future enhancement, such as expanding the dataset to include a broader variety of fruits and conditions.
+By changing parameters, which included varying the number of epochs, batch sizes, convolutional layers, and the inclusion of dropout layers, was crucial in achieving an optimal balance between model accuracy and training efficiency. The final model demonstrated improved performance and reliability, though there remain certain limitations. For instance, the model's accuracy is inherently linked to the quality and diversity of the training dataset, indicating potential areas for future enhancement, such as expanding the dataset to include a broader variety of fruits and conditions.
 
 Overall, the proposed CNN model and mobile application highlight the potential of AI-driven solutions in agricultural practices, offering a practical approach to enhance the efficiency and accuracy of fruit quality assessment. Future work could focus on extending the model's capabilities to other types of fruits, further improving the model's generalisation abilities, and integrating additional features such as user feedback mechanisms to continuously refine and update the model's accuracy in real-world scenarios.
 
 \section*{Acknowledgment}
 
-We would like to acknowledge Pieter Swanepoel for assisting us with the setup of the Google Colabe environment.
+We would like to acknowledge Pieter Swanepoel for assisting us with the setup of the Google Colabe environment. %He is lekker.
 
 \begin{thebibliography}{00}
     \bibitem{b10} Albardi, F., Kabir, H.D., Bhuiyan, M.M.I., Kebria, P.M., Khosravi, A. and Nahavandi, S., 2021, October. A comprehensive study on torchvision pre-trained models for fine-grained inter-species classification. In 2021 IEEE International Conference on Systems, Man, and Cybernetics (SMC) (pp. 2767-2774). IEEE.
@@ -773,5 +781,12 @@ We would like to acknowledge Pieter Swanepoel for assisting us with the setup of
     learning. Springer, Volume 11, pp. 747-750.    
 
 \end{thebibliography}
+
+\section*{Contribution to Project}
+\begin{itemize}
+    \item Bernard Swanepoel 39909476: Created the final version of the model that contained multiple conventional layer, created the Kivy mobile application, trained the model, and created presentations.
+    \item Ashton du Plessis 34202676: Created the first version of the model that contained 1 conventional layer, helped with training first version of the model, did the documentation, helped with the creation of the presentation, and presented 2 out of the 3 presentations.
+    \item Nico Deng 33700710: Change UI of the Kivy mobile application to be more user-friendly, helped with the documentation, helped with the creation of the presentation, and presented 1 out of the 3 presentations.
+\end{itemize}
 
 \end{document}
